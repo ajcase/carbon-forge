@@ -132,23 +132,35 @@ export default UserManagementTable;
 
   return (
     <Shell>
-      <div style={{ padding: '2rem', backgroundColor: '#161616', color: '#f4f4f4', minHeight: 'calc(100vh - 48px)' }}>
+      <div style={{ 
+        padding: '2rem', 
+        backgroundColor: '#161616', 
+        color: '#f4f4f4', 
+        minHeight: 'calc(100vh - 48px)',
+        display: 'flex',
+        flexDirection: 'column'
+      }}>
         <h1>Carbon Prototyper</h1>
         <p style={{ maxWidth: '800px', marginBottom: '2rem' }}>
           Generate Carbon Design System components using natural language. Describe what you need, and we'll create the code.
         </p>
-        <Grid condensed>
-          <Column lg={8} md={4} sm={4} style={{ height: '100%' }}>
+        <div style={{ 
+          display: 'flex', 
+          gap: '2rem',
+          flex: 1,
+          minHeight: 'calc(100vh - 200px)'
+        }}>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <Prompt onSubmit={handleGenerateCode} isLoading={isLoading} />
-          </Column>
-          <Column lg={8} md={4} sm={4} style={{ height: '100%' }}>
+          </div>
+          <div style={{ flex: 1, minWidth: 0 }}>
             <CodeOutput 
               code={code} 
               language={language} 
               onLanguageChange={setLanguage}
             />
-          </Column>
-        </Grid>
+          </div>
+        </div>
       </div>
     </Shell>
   );
