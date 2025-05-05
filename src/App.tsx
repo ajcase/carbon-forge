@@ -25,7 +25,7 @@ function App() {
   const handleGenerateCode = async (prompt: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/generate', {
+      const response = await fetch('/api/generate', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -44,7 +44,7 @@ function App() {
   const handleConvertCode = async (sourceCode: string, sourceDesignSystem: string, targetFramework: string) => {
     setIsLoading(true);
     try {
-      const response = await fetch('http://localhost:3001/api/convert', {
+      const response = await fetch('/api/convert', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

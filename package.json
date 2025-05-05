@@ -28,7 +28,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "DANGEROUSLY_DISABLE_HOST_CHECK=true HOST=localhost react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
@@ -56,5 +56,6 @@
   "devDependencies": {
     "@types/react-syntax-highlighter": "^15.5.13",
     "concurrently": "^8.2.2"
-  }
+  },
+  "proxy": "http://localhost:3001"
 }

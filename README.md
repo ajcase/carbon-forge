@@ -2,6 +2,34 @@
 
 Carbon Prototyper is a web application that enables rapid prototyping using IBM's Carbon Design System. Users can write natural language queries to generate UI components, convert components from other design systems to Carbon, and view code in multiple languages.
 
+## Version 0.4.0 - Netlify Integration
+
+### New Features
+- Integrated Netlify CLI to run both frontend and backend concurrently with `netlify dev`.
+- Added `netlify.toml` configuration file to define build and dev commands.
+
+### Development Setup for Netlify CLI
+
+1. Ensure you have Netlify CLI installed:
+   ```bash
+   npm install -g netlify-cli
+   ```
+2. Run the project locally using Netlify:
+   ```bash
+   netlify dev
+   ```
+3. Netlify Dev will:
+   - Run `npm run dev` to start both the frontend (http://localhost:3000) and backend (http://localhost:3001).
+   - Proxy API requests to the backend automatically.
+
+### Build and Deployment
+
+- For production builds, Netlify uses the following build command:
+  ```bash
+  npm run build
+  ```
+- The published directory is `build`.
+
 ## Version 0.3.0 - Code Generation and Display Implementation
 
 ### New Features
