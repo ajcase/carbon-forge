@@ -11,7 +11,3 @@
   to = "http://localhost:3001/api/:splat"
   status = 200
   force = true
-
-[build.environment]
-  NODE_ENV = "production"
-  CI = "true" 
