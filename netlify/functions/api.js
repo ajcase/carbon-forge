@@ -1,7 +1,4 @@
-const { WatsonxAI } = require('@ibm-cloud/watsonx-ai');
-const { IamAuthenticator } = require('ibm-cloud-sdk-core');
-
-exports.handler = async function(event, context) {
+export const handler = async function(event, context) {
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
     return {
@@ -11,9 +8,12 @@ exports.handler = async function(event, context) {
   }
 
   try {
+    const { WatsonXAI } = await import('@ibm-cloud/watsonx-ai');
+    const { IamAuthenticator } = await import('ibm-cloud-sdk-core');
+
     const { prompt, model } = JSON.parse(event.body);
 
-    const watsonx = new WatsonxAI({
+    const watsonx = new WatsonXAI({
       authenticator: new IamAuthenticator({
         apikey: process.env.WATSONX_API_KEY,
       }),

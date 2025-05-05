@@ -1,0 +1,10 @@
+{
+  "name": "carbon-prototyper-functions",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@ibm-cloud/watsonx-ai": "^1.6.4",
+    "ibm-cloud-sdk-core": "^3.0.0"
+  }
+} 
