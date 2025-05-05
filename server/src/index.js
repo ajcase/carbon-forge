@@ -7,7 +7,11 @@ import rateLimit from 'express-rate-limit';
 import { WatsonXAI } from '@ibm-cloud/watsonx-ai';
 import { IamAuthenticator } from 'ibm-cloud-sdk-core';
 import winston from 'winston';
+import { createRequire } from 'module';
 import watsonxConfig from './config/watsonx.js';
+
+const require = createRequire(import.meta.url);
+const muiToCarbonMapping = require('./mui-to-carbon.json');
 
 // Initialize Express app
 const app = express();
@@ -86,21 +90,18 @@ const limiter = rateLimit({
 });
 app.use(limiter);
 
-// Generate React code from prompt
+// Generate code from prompt
 app.post('/api/generate', async (req, res) => {
   try {
-    const { prompt } = req.body;
+    const { prompt, model, framework = 'react' } = req.body;
     
     if (!prompt) {
       return res.status(400).json({ error: 'Prompt is required' });
     }
 
-    logger.info('Generating code for prompt:', { prompt });
+    logger.info('Generating code for prompt:', { prompt, model, framework });
 
-    // Log the request payload
-    const requestPayload = {
-      input: `You are a React developer specializing in IBM Carbon Design System. Your task is to generate clean, efficient React code following Carbon Design System best practices.
-
+    const frameworkSpecificRequirements = framework === 'react' ? `
 Requirements:
 1. Always include necessary imports from '@carbon/react'
 2. Use proper component structure with TypeScript types
@@ -109,12 +110,31 @@ Requirements:
 5. Follow Carbon Design System naming conventions
 6. Include proper accessibility attributes
 7. Use Carbon's built-in components and utilities
+8. Never hallucinate, only use components that are part of the Carbon Design System.` : `
+Requirements:
+1. Always include necessary imports from '@carbon/web-components'
+2. Use proper custom element naming (kebab-case)
+3. Include proper attributes and properties
+4. Add comments for complex logic
+5. Follow Carbon Design System naming conventions
+6. Include proper accessibility attributes
+7. Use Carbon's built-in web components
 8. Never hallucinate, only use components that are part of the Carbon Design System.
+9. Use proper event handling with custom events
+10. Include proper shadow DOM usage where applicable
+11. Return ONLY the Web Components code without any HTML tags or end-of-text markers
+12. Do not include any wrapper elements or additional text`;
+
+    // Log the request payload
+    const requestPayload = {
+      input: `You are a ${framework === 'react' ? 'React' : 'Web Components'} developer specializing in IBM Carbon Design System. Your task is to generate clean, efficient ${framework === 'react' ? 'React' : 'Web Components'} code following Carbon Design System best practices.
+
+${frameworkSpecificRequirements}
 
 User request: ${prompt}
 
-Please provide the complete React component code with all necessary imports and proper structure.`,
-      modelId: watsonxConfig.modelId,
+Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} code with all necessary imports and proper structure. Do not include any additional text, HTML tags, or end-of-text markers.`,
+      modelId: model || watsonxConfig.modelId,
       projectId: watsonxConfig.projectId,
       parameters: {
         max_new_tokens: 2048,
@@ -148,15 +168,18 @@ Please provide the complete React component code with all necessary imports and 
 
     // Clean up the response
     const generatedCode = response.result.results[0].generated_text
-      .replace(/```(jsx|tsx|javascript|typescript)?\n?/g, '') // Remove code block markers
+      .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '') // Remove code block markers
       .replace(/```\n?/g, '') // Remove closing code block markers
+      .replace(/<html>\n?/g, '') // Remove HTML wrapper
+      .replace(/<\/html>\n?/g, '') // Remove HTML wrapper
+      .replace(/<\|end_of_text\|\>/g, '') // Remove end of text marker
       .trim();
 
     logger.info('Generated code length:', generatedCode.length);
 
     res.json({
       code: generatedCode,
-      model: watsonxConfig.modelId
+      model: requestPayload.modelId
     });
   } catch (error) {
     logger.error('Error in /api/generate:', {
@@ -212,8 +235,11 @@ Please provide the complete updated React component code with all necessary chan
 
     // Clean up the response
     const generatedCode = response.result.results[0].generated_text
-      .replace(/```(jsx|tsx|javascript|typescript)?\n?/g, '') // Remove code block markers
+      .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '') // Remove code block markers
       .replace(/```\n?/g, '') // Remove closing code block markers
+      .replace(/<html>\n?/g, '') // Remove HTML wrapper
+      .replace(/<\/html>\n?/g, '') // Remove HTML wrapper
+      .replace(/<\|end_of_text\|\>/g, '') // Remove end of text marker
       .trim();
 
     res.json({
@@ -229,7 +255,7 @@ Please provide the complete updated React component code with all necessary chan
 // Convert code from other design systems to Carbon
 app.post('/api/convert', async (req, res) => {
   try {
-    const { sourceCode, sourceDesignSystem, targetFramework } = req.body;
+    const { sourceCode, sourceDesignSystem, targetFramework, model } = req.body;
     
     if (!sourceCode || !sourceDesignSystem || !targetFramework) {
       return res.status(400).json({ error: 'Source code, design system, and target framework are required' });
@@ -238,27 +264,51 @@ app.post('/api/convert', async (req, res) => {
     logger.info('Converting code:', { 
       designSystem: sourceDesignSystem,
       framework: targetFramework,
+      model,
       codeLength: sourceCode.length 
     });
 
-    const requestPayload = {
-      input: `You are a React developer specializing in IBM Carbon Design System. Your task is to convert code from ${sourceDesignSystem} to Carbon Design System components.
+    // Create mapping context for the prompt
+    const mappingContext = muiToCarbonMapping
+      .map(item => `${item.material_component} -> ${item.carbon_component} (${item.alignment_notes})`)
+      .join('\n');
 
+    const frameworkSpecificRequirements = targetFramework === 'react' ? `
 Requirements:
-1. Convert all UI components to their Carbon Design System equivalents
-2. Maintain the same functionality and behavior
-3. Use proper Carbon Design System patterns and best practices
-4. Include all necessary imports from '@carbon/react'
-5. Preserve component structure and props
-6. Add proper accessibility attributes
-7. Follow Carbon Design System naming conventions
-8. Never hallucinate, only use components that are part of the Carbon Design System.
+1. Convert all UI components to their Carbon Design System equivalents using the mapping above
+2. If a component is not in the mapping, do not make up a component - use the closest equivalent
+3. Maintain the same functionality and behavior
+4. Use proper Carbon Design System patterns and best practices
+5. Include all necessary imports from '@carbon/react'
+6. Preserve component structure and props
+7. Add proper accessibility attributes
+8. Follow Carbon Design System naming conventions` : `
+Requirements:
+1. Convert all UI components to their Carbon Web Components equivalents
+2. Use proper custom element naming (kebab-case)
+3. Convert props to attributes and properties
+4. Use proper event handling with custom events
+5. Include proper shadow DOM usage where applicable
+6. Maintain the same functionality and behavior
+7. Use proper Carbon Design System patterns and best practices
+8. Include all necessary imports from '@carbon/web-components'
+9. Add proper accessibility attributes
+10. Follow Carbon Design System naming conventions`;
+
+    const requestPayload = {
+      input: `You are a ${targetFramework === 'react' ? 'React' : 'Web Components'} developer specializing in IBM Carbon Design System. Your task is to convert code from ${sourceDesignSystem} to Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}.
+
+IMPORTANT: You MUST use the following component mapping for conversion:
+
+${mappingContext}
+
+${frameworkSpecificRequirements}
 
 Source code in ${sourceDesignSystem}:
 ${sourceCode}
 
-Please provide the complete converted code using Carbon Design System components.`,
-      modelId: watsonxConfig.modelId,
+Please provide the complete converted code using Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}. Only return code, do not return any other text.`,
+      modelId: model || watsonxConfig.modelId,
       projectId: watsonxConfig.projectId,
       parameters: {
         max_new_tokens: 2048,
@@ -280,8 +330,11 @@ Please provide the complete converted code using Carbon Design System components
     }
 
     const convertedCode = response.result.results[0].generated_text
-      .replace(/```(jsx|tsx|javascript|typescript)?\n?/g, '')
+      .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '')
       .replace(/```\n?/g, '')
+      .replace(/<html>\n?/g, '')
+      .replace(/<\/html>\n?/g, '')
+      .replace(/<\|end_of_text\|\>/g, '')
       .trim();
 
     logger.info('Code conversion successful:', { 
@@ -291,7 +344,7 @@ Please provide the complete converted code using Carbon Design System components
 
     res.json({
       code: convertedCode,
-      model: watsonxConfig.modelId
+      model: requestPayload.modelId
     });
   } catch (error) {
     logger.error('Error in /api/convert:', {

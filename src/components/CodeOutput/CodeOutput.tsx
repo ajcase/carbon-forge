@@ -24,10 +24,24 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({ code, language, isLoadin
     }
   };
 
+  // Map language to syntax highlighter language
+  const getSyntaxLanguage = () => {
+    switch (language.toLowerCase()) {
+      case 'react':
+        return 'jsx';
+      case 'angular':
+        return 'typescript';
+      case 'vue':
+        return 'javascript';
+      default:
+        return 'javascript';
+    }
+  };
+
   return (
     <div className="code-output">
       <div className="code-output__header">
-        <h3>Generated Code</h3>
+      <h3 className="prompt__heading">Generated Code</h3>
         <Button
           kind="ghost"
           size="sm"
@@ -57,9 +71,19 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({ code, language, isLoadin
           </div>
         ) : code ? (
           <SyntaxHighlighter
-            language={language}
+            language={getSyntaxLanguage()}
             style={vscDarkPlus}
-            customStyle={{ margin: 0 }}
+            customStyle={{
+              margin: 0,
+              padding: '1rem',
+              borderRadius: '4px',
+              backgroundColor: 'var(--cds-layer)',
+              fontSize: '14px',
+              lineHeight: '1.5',
+              fontFamily: 'IBM Plex Mono, monospace'
+            }}
+            showLineNumbers
+            wrapLines
           >
             {code}
           </SyntaxHighlighter>

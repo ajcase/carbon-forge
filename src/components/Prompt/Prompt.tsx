@@ -100,10 +100,6 @@ export const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
 
   return (
     <Tile className="prompt__container">
-      <Tabs selectedIndex={tabIndex} onChange={handleTabChange}>
-        <Tab>New Component</Tab>
-        <Tab>Convert Component</Tab>
-      </Tabs>
       {tabIndex === 0 && (
         <>
           <h3 className="prompt__heading">What do you want to create?</h3>

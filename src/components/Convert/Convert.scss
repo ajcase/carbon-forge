@@ -1,0 +1,32 @@
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+
+.convert-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  &__textarea {
+    .cds--label {
+      color: $text-primary;
+      font-weight: 600;
+    }
+
+    .cds--text-area {
+      background-color: $layer-02 !important;
+      color: $text-primary;
+      min-height: 120px;
+      
+      &:disabled {
+        background-color: $layer-03;
+        color: $text-disabled;
+      }
+    }
+  }
+} 
+.convert-controls .cds--select-input__wrapper select {
+  background-color: $layer-02  !important;
+  color: $text-primary;
+}
