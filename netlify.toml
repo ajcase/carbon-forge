@@ -2,12 +2,17 @@
   command = "npm install && npm run build"
   publish = "build"
   environment = { NODE_VERSION = "18.17.0" }
+  functions = "netlify/functions"
 
 [dev]
   command = "npm run dev"
 
 [[redirects]]
   from = "/api/*"
-  to = "http://localhost:3001/api/:splat"
+  to = "/.netlify/functions/api"
   status = 200
   force = true
+
+[build.environment]
+  NODE_ENV = "production"
+  CI = "true"
