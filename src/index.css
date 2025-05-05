@@ -3,13 +3,13 @@ body {
   font-family: 'IBM Plex Sans', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #161616;
-  color: #f4f4f4;
+  background-color: var(--cds-ui-background);
+  color: var(--cds-text-primary);
   min-height: 100vh;
 }
 
 html {
-  background-color: #161616;
+  background-color: var(--cds-ui-background);
 }
 
 code {

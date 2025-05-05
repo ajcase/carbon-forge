@@ -2,7 +2,7 @@
   height: 100%;
   display: flex;
   flex-direction: column;
-  background-color: #262626;
+  background-color: var(--cds-layer);
   border-radius: 4px;
   padding: 1rem;
 
@@ -14,7 +14,7 @@
 
     h3 {
       margin: 0;
-      color: #fff;
+      color: var(--cds-text-primary);
     }
   }
 
@@ -30,7 +30,7 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #fff;
+    color: var(--cds-text-primary);
 
     p {
       margin-top: 1rem;
@@ -43,6 +43,6 @@
     align-items: center;
     justify-content: center;
     height: 100%;
-    color: #8d8d8d;
+    color: var(--cds-text-secondary);
   }
 } 

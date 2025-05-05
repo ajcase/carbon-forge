@@ -8,18 +8,25 @@ interface ShellProps {
 
 const Shell: React.FC<ShellProps> = ({ children }) => {
   const [isSideNavExpanded, setIsSideNavExpanded] = useState(false);
+  const [currentTheme, setCurrentTheme] = useState<'g100' | 'white'>('g100');
 
   const handleSideNavExpand = () => {
     setIsSideNavExpanded(!isSideNavExpanded);
   };
 
+  const handleThemeSwitch = () => {
+    setCurrentTheme(currentTheme === 'g100' ? 'white' : 'g100');
+  };
+
   return (
-    <Theme theme="g100" style={{ minHeight: '100vh' }}>
+    <Theme theme={currentTheme} style={{ minHeight: '100vh' }}>
       <AppHeader 
         isSideNavExpanded={isSideNavExpanded} 
-        onClickSideNavExpand={handleSideNavExpand} 
+        onClickSideNavExpand={handleSideNavExpand}
+        currentTheme={currentTheme}
+        onThemeSwitch={handleThemeSwitch}
       />
-      <Content style={{ backgroundColor: '#161616', minHeight: 'calc(100vh - 48px)' }}>
+      <Content style={{ backgroundColor: currentTheme === 'g100' ? '#161616' : '#ffffff', minHeight: 'calc(100vh - 48px)' }}>
         {children}
       </Content>
     </Theme>

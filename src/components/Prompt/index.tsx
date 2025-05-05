@@ -10,9 +10,11 @@ import {
   Tabs,
   Tab,
   FormGroup,
-  Tag
+  Tag,
+  AILabel
 } from '@carbon/react';
 import { Send, ArrowsHorizontal } from '@carbon/icons-react';
+import './Prompt.scss';
 
 interface Message {
   type: 'user' | 'ai';
@@ -95,30 +97,28 @@ const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
     });
   };
 
+  const aiLabel = <AILabel className="ai-label-container" />;
+
   return (
-    <Tile style={{ 
-      backgroundColor: '#262626', 
-      height: '100%',
-      display: 'flex',
-      flexDirection: 'column'
-    }}>
+    <Tile className="prompt__container">
       <Tabs selectedIndex={tabIndex} onChange={handleTabChange}>
         <Tab>New Component</Tab>
         <Tab>Convert Component</Tab>
       </Tabs>
       {tabIndex === 0 && (
         <>
-          <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', marginBottom: '1rem' }}>
+          <h3 className="prompt__heading">What do you want to create?</h3>
+          <div className="prompt__messages-container">
             {messages.length === 0 && (
-              <div style={{ marginBottom: '1rem' }}>
-                <h4>Quick Examples</h4>
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.5rem' }}>
+              <div className="prompt__examples-container">
+                <h4 className="prompt__examples-heading">Quick Examples</h4>
+                <div className="prompt__examples-list">
                   {QUICK_EXAMPLES.map((example, index) => (
                     <Tag 
                       key={index} 
                       type="blue" 
-                      onClick={() => handleExampleClick(example.prompt)} 
-                      style={{ cursor: 'pointer' }}
+                      onClick={() => handleExampleClick(example.prompt)}
+                      className="prompt__example-tag"
                     >
                       {example.title}
                     </Tag>
@@ -129,29 +129,16 @@ const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
             {messages.map((message, index) => (
               <div
                 key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
-                  marginBottom: '1rem'
-                }}
+                className={`prompt__message prompt__message--${message.type}`}
               >
-                <div
-                  style={{
-                    backgroundColor: message.type === 'user' ? '#0f62fe' : '#393939',
-                    color: '#fff',
-                    padding: '0.75rem 1rem',
-                    borderRadius: '1rem',
-                    maxWidth: '80%',
-                    wordBreak: 'break-word'
-                  }}
-                >
+                <div className={`prompt__message-content prompt__message-content--${message.type}`}>
                   {message.content}
                 </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <Form onSubmit={handleSubmit} style={{ padding: '1rem' }}>
+          <Form onSubmit={handleSubmit} className="prompt__form">
             <Stack gap={3}>
               <TextArea
                 id="prompt-input"
@@ -163,8 +150,10 @@ const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
                   setUseExample(false);
                 }}
                 rows={3}
+                decorator={aiLabel}
+                className="prompt__textarea"
               />
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <div className="prompt__button-container">
                 <Button
                   kind="primary"
                   type="submit"
@@ -181,33 +170,21 @@ const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
       )}
       {tabIndex === 1 && (
         <>
-          <div style={{ flex: 1, overflowY: 'auto', padding: '1rem', marginBottom: '1rem' }}>
+          <h3 className="prompt__heading">What do you want to convert?</h3>
+          <div className="prompt__messages-container">
             {messages.map((message, index) => (
               <div
                 key={index}
-                style={{
-                  display: 'flex',
-                  justifyContent: message.type === 'user' ? 'flex-end' : 'flex-start',
-                  marginBottom: '1rem'
-                }}
+                className={`prompt__message prompt__message--${message.type}`}
               >
-                <div
-                  style={{
-                    backgroundColor: message.type === 'user' ? '#0f62fe' : '#393939',
-                    color: '#fff',
-                    padding: '0.75rem 1rem',
-                    borderRadius: '1rem',
-                    maxWidth: '80%',
-                    wordBreak: 'break-word'
-                  }}
-                >
+                <div className={`prompt__message-content prompt__message-content--${message.type}`}>
                   {message.content}
                 </div>
               </div>
             ))}
             <div ref={messagesEndRef} />
           </div>
-          <Form onSubmit={handleSubmit} style={{ padding: '1rem' }}>
+          <Form onSubmit={handleSubmit} className="prompt__form">
             <Stack gap={3}>
               <FormGroup legendText="Source Design System">
                 <Select 
@@ -230,8 +207,10 @@ const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
                 value={promptText}
                 onChange={(e) => setPromptText(e.target.value)}
                 rows={3}
+                decorator={aiLabel}
+                className="prompt__textarea"
               />
-              <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+              <div className="prompt__button-container">
                 <Button
                   kind="primary"
                   type="submit"

@@ -15,16 +15,20 @@ import {
   SideNavMenu,
   SideNavMenuItem,
 } from '@carbon/react';
-import { Switcher, Help, Information } from '@carbon/icons-react';
+import { Switcher, Help, Information, Light, Asleep } from '@carbon/icons-react';
 
 interface AppHeaderProps {
   isSideNavExpanded: boolean;
   onClickSideNavExpand: () => void;
+  currentTheme: 'g100' | 'white';
+  onThemeSwitch: () => void;
 }
 
 const AppHeader: React.FC<AppHeaderProps> = ({ 
   isSideNavExpanded, 
-  onClickSideNavExpand 
+  onClickSideNavExpand,
+  currentTheme,
+  onThemeSwitch
 }) => {
   return (
     <HeaderContainer
@@ -36,15 +40,23 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             onClick={onClickSideNavExpand}
             isActive={isSideNavExpanded}
           />
-          <HeaderName href="/" prefix="Carbon">
-            Prototyper
+          <HeaderName href="/" prefix="IBM">
+            Forge
           </HeaderName>
           <HeaderNavigation aria-label="Carbon Prototyper">
-            <HeaderMenuItem href="#">New Component</HeaderMenuItem>
-            <HeaderMenuItem href="#">Convert Component</HeaderMenuItem>
-            <HeaderMenuItem href="#">Examples</HeaderMenuItem>
+            <HeaderMenuItem href="#">Generate</HeaderMenuItem>
+            <HeaderMenuItem href="#">Migration</HeaderMenuItem>
+            <HeaderMenuItem href="#">Components</HeaderMenuItem>
+            <HeaderMenuItem href="#">FAQ</HeaderMenuItem>
           </HeaderNavigation>
           <HeaderGlobalBar>
+            <HeaderGlobalAction 
+              aria-label="Theme Switcher" 
+              tooltipAlignment="center"
+              onClick={onThemeSwitch}
+            >
+              {currentTheme === 'g100' ? <Light size={20} /> : <Asleep size={20} />}
+            </HeaderGlobalAction>
             <HeaderGlobalAction aria-label="Help" tooltipAlignment="center">
               <Help size={20} />
             </HeaderGlobalAction>

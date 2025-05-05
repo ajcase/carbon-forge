@@ -65,73 +65,75 @@ function App() {
 
   return (
     <Shell>
-      <div className="app-content">
-        <h1>Carbon Prototyper</h1>
-        <p className="app-description">
-          Generate and convert components using IBM Carbon Design System
-        </p>
-        <ContentSwitcher
-          onChange={handleModeChange}
-          selectedIndex={activeMode}
-          className="mode-switcher"
-          size="lg"
-        >
-          <Switch name="generate" text="Generate" />
-          <Switch name="convert" text="Convert" />
-        </ContentSwitcher>
-        {activeMode === 0 && (
-          <div className="app-layout">
-            <div className="app-panel">
-              <Prompt onCodeGenerated={setGeneratedCode} />
-            </div>
-            <div className="app-panel">
-              <CodeOutput code={generatedCode} language="react" isLoading={isLoading} />
-            </div>
-          </div>
-        )}
-        {activeMode === 1 && (
-          <div className="app-layout">
-            <div className="app-panel">
-              <div className="convert-controls">
-                <Select
-                  id="design-system-select"
-                  labelText="Source Design System"
-                  value={sourceDesignSystem}
-                  onChange={(e) => setSourceDesignSystem(e.target.value)}
-                >
-                  <SelectItem value="" text="Select a design system" />
-                  <SelectItem value="material-ui" text="Material UI" />
-                  <SelectItem value="bootstrap" text="Bootstrap" />
-                  <SelectItem value="ant-design" text="Ant Design" />
-                  <SelectItem value="chakra-ui" text="Chakra UI" />
-                </Select>
-                <Select
-                  id="framework-select"
-                  labelText="Target Framework"
-                  value={targetFramework}
-                  onChange={(e) => setTargetFramework(e.target.value)}
-                >
-                  <SelectItem value="react" text="React" />
-                  <SelectItem value="angular" text="Angular" />
-                  <SelectItem value="vue" text="Vue" />
-                </Select>
-                <TextArea
-                  id="source-code"
-                  labelText="Source Code"
-                  value={sourceCode}
-                  onChange={(e) => setSourceCode(e.target.value)}
-                  rows={10}
-                />
-                <Button onClick={handleConvertCode} disabled={isLoading || !sourceCode || !sourceDesignSystem}>
-                  Convert Code
-                </Button>
+      <div className="main-container">
+        <div className="app-content">
+          <h1>Forge</h1>
+          <p className="app-description">
+            Transform your UI. Accelerate your migration to Carbon.
+          </p>
+          <ContentSwitcher
+            onChange={handleModeChange}
+            selectedIndex={activeMode}
+            className="mode-switcher"
+            size="lg"
+          >
+            <Switch name="generate" text="Generate" />
+            <Switch name="convert" text="Convert" />
+          </ContentSwitcher>
+          {activeMode === 0 && (
+            <div className="app-layout">
+              <div className="app-panel">
+                <Prompt onCodeGenerated={setGeneratedCode} />
+              </div>
+              <div className="app-panel">
+                <CodeOutput code={generatedCode} language="react" isLoading={isLoading} />
               </div>
             </div>
-            <div className="app-panel">
-              <CodeOutput code={generatedCode} language="react" isLoading={isLoading} />
+          )}
+          {activeMode === 1 && (
+            <div className="app-layout">
+              <div className="app-panel">
+                <div className="convert-controls">
+                  <Select
+                    id="design-system-select"
+                    labelText="Source Design System"
+                    value={sourceDesignSystem}
+                    onChange={(e) => setSourceDesignSystem(e.target.value)}
+                  >
+                    <SelectItem value="" text="Select a design system" />
+                    <SelectItem value="material-ui" text="Material UI" />
+                    <SelectItem value="bootstrap" text="Bootstrap" />
+                    <SelectItem value="ant-design" text="Ant Design" />
+                    <SelectItem value="chakra-ui" text="Chakra UI" />
+                  </Select>
+                  <Select
+                    id="framework-select"
+                    labelText="Target Framework"
+                    value={targetFramework}
+                    onChange={(e) => setTargetFramework(e.target.value)}
+                  >
+                    <SelectItem value="react" text="React" />
+                    <SelectItem value="angular" text="Angular" />
+                    <SelectItem value="vue" text="Vue" />
+                  </Select>
+                  <TextArea
+                    id="source-code"
+                    labelText="Source Code"
+                    value={sourceCode}
+                    onChange={(e) => setSourceCode(e.target.value)}
+                    rows={10}
+                  />
+                  <Button onClick={handleConvertCode} disabled={isLoading || !sourceCode || !sourceDesignSystem}>
+                    Convert Code
+                  </Button>
+                </div>
+              </div>
+              <div className="app-panel">
+                <CodeOutput code={generatedCode} language="react" isLoading={isLoading} />
+              </div>
             </div>
-          </div>
-        )}
+          )}
+        </div>
       </div>
     </Shell>
   );

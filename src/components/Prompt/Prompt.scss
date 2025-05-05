@@ -1,46 +1,126 @@
+@use '@carbon/styles/scss/colors' as *;
+@use '@carbon/styles/scss/theme' as *;
+@use '@carbon/styles/scss/spacing' as *;
+@use '@carbon/styles/scss/type' as *;
+
 .prompt {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background-color: #262626;
+  background-color: $layer-01;
   border-radius: 4px;
   overflow: hidden;
 
-  &__content {
-    padding: 1rem;
-    flex: 1;
+  &__container {
+    height: 100%;
     display: flex;
     flex-direction: column;
-    gap: 1rem;
+    background-color: $layer-01;
   }
 
-  &__header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  &__heading {
+    @include type-style('heading-03');
+    margin-bottom: $spacing-05;
+    color: $text-primary;
+  }
 
-    h3 {
-      margin: 0;
-      color: #ffffff;
+  &__messages-container {
+    flex: 1;
+    overflow-y: auto;
+    padding: $spacing-05;
+    margin-bottom: $spacing-05;
+  }
+
+  &__examples-container {
+    margin-bottom: $spacing-05;
+  }
+
+  &__examples-heading {
+    @include type-style('heading-04');
+    margin-bottom: $spacing-03;
+    color: $text-primary;
+  }
+
+  &__examples-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: $spacing-03;
+  }
+
+  &__example-tag {
+    cursor: pointer;
+  }
+
+  &__message {
+    display: flex;
+    margin-bottom: $spacing-05;
+
+    &--user {
+      justify-content: flex-end;
+    }
+
+    &--ai {
+      justify-content: flex-start;
     }
   }
 
-  &__error {
-    color: #ff8389;
-    font-size: 0.875rem;
-    margin-top: 0.5rem;
+  &__message-content {
+    padding: $spacing-04 $spacing-05;
+    border-radius: $spacing-05;
+    max-width: 80%;
+    word-break: break-word;
+
+    &--user {
+      background-color: $interactive;
+      color: $text-on-color;
+    }
+
+    &--ai {
+      background-color: $field-01;
+      color: $text-primary;
+    }
   }
 
-  .bx--text-area {
-    background-color: #393939;
-    color: #ffffff;
+  &__form {
+    padding: $spacing-05;
   }
 
-  .bx--select {
+  &__textarea {
+    .cds--label {
+      color: $text-primary;
+      font-weight: 600;
+    }
+
+    .cds--text-area {
+      background-color: $layer-03;
+      color: $text-primary;
+      min-height: 120px;
+      
+      &:disabled {
+        background-color: $layer-03;
+        color: $text-disabled;
+      }
+    }
+  }
+
+  .ai-label-container {
+    color: $text-secondary;
+    @include type-style('heading-01');
+  }
+
+  .cds--select {
     width: 200px;
   }
 
-  .bx--tabs {
-    background-color: #393939;
+  .cds--tabs {
+    background-color: $field-01;
+  }
+
+  .cds--btn {
+    &:disabled {
+      background-color: $interactive;
+      color: $text-on-color;
+      opacity: 0.5;
+    }
   }
 } 

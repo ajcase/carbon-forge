@@ -63,7 +63,7 @@ const CodeOutput: React.FC<CodeOutputProps> = ({
   };
 
   return (
-    <Tile style={{ backgroundColor: '#262626', height: '100%' }}>
+    <Tile style={{ backgroundColor: 'var(--cds-layer)', height: '100%' }}>
       <Stack gap={5}>
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <Toggle
@@ -124,8 +124,8 @@ const CodeOutput: React.FC<CodeOutputProps> = ({
           {showPreview ? (
             <div style={{ 
               padding: '1rem',
-              backgroundColor: '#f4f4f4',
-              color: '#161616',
+              backgroundColor: 'var(--cds-field)',
+              color: 'var(--cds-text-primary)',
               borderRadius: '4px',
               height: '500px',
               overflow: 'auto',
@@ -146,7 +146,7 @@ const CodeOutput: React.FC<CodeOutputProps> = ({
                 borderRadius: '4px',
                 maxHeight: '500px',
                 overflow: 'auto',
-                backgroundColor: '#1e1e1e'
+                backgroundColor: 'var(--cds-layer)'
               }}
             >
               {code}
@@ -157,9 +157,9 @@ const CodeOutput: React.FC<CodeOutputProps> = ({
               alignItems: 'center', 
               justifyContent: 'center',
               height: '500px',
-              backgroundColor: '#262A32',
+              backgroundColor: 'var(--cds-layer)',
               borderRadius: '4px',
-              color: '#8D8D8D',
+              color: 'var(--cds-text-secondary)',
               flexDirection: 'column'
             }}>
               <Code size={32} style={{ marginBottom: '1rem' }} />
