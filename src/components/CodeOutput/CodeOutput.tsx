@@ -4,7 +4,7 @@ import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { vscDarkPlus } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { Copy, View } from '@carbon/icons-react';
 import { Button, InlineNotification, Loading, Modal } from '@carbon/react';
-import { SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
+import { Sandpack, SandpackProvider, SandpackLayout, SandpackCodeEditor, SandpackPreview } from '@codesandbox/sandpack-react';
 import { sandpackDark } from '@codesandbox/sandpack-themes';
 import './CodeOutput.scss';
 
@@ -86,37 +86,31 @@ root.render(
         passiveModal={false}
         hasScrollingContent={true}
       >
-        <div style={{ height: '80vh', width: '100%', position: 'relative' }}>
-          <SandpackProvider
-            template="react"
-            theme={sandpackDark}
-            files={files}
-            options={{
-              activeFile: '/App.js',
-              visibleFiles: ['/App.js', '/index.js'],
-              externalResources: ['https://unpkg.com/@carbon/styles/css/styles.css']
-            }}
-            customSetup={{
-              dependencies: {
-                "@carbon/react": "^1.81.0",
-                "@carbon/styles": "^1.80.0",
-                "@carbon/icons-react": "^11.59.0",
-                "@carbon/type": "^11.39.0",
-                'react': '^18.2.0',
-                'react-dom': '^18.2.0',
-                'react-router-dom': '^7.0.0'
-              }
-            }}
-          >
-            <SandpackLayout>
-              <SandpackCodeEditor
-                showLineNumbers
-                showInlineErrors
-                wrapContent
-              />
-              <SandpackPreview />
-            </SandpackLayout>
-          </SandpackProvider>
+        <div style={{ minHeight: '500px', width: '100%', position: 'relative' }}>
+          <div style={{ minHeight: '500px', height: '100%' }}>
+            <Sandpack
+              template="react"
+              theme={sandpackDark}
+              files={files}
+              options={{
+                editorHeight: 500,
+                activeFile: '/App.js',
+                visibleFiles: ['/App.js', '/index.js'],
+                externalResources: ['https://unpkg.com/@carbon/styles/css/styles.css']
+              }}
+              customSetup={{
+                dependencies: {
+                  "@carbon/react": "^1.81.0",
+                  "@carbon/styles": "^1.80.0",
+                  "@carbon/icons-react": "^11.59.0",
+                  "@carbon/type": "^11.39.0",
+                  'react': '^18.2.0',
+                  'react-dom': '^18.2.0',
+                  'react-router-dom': '^7.0.0'
+                }
+              }}
+            />
+          </div>
         </div>
       </Modal>,
       document.body
