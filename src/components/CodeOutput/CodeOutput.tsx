@@ -41,17 +41,19 @@ export const CodeOutput: React.FC<CodeOutputProps> = ({ code, language, isLoadin
   return (
     <div className="code-output">
       <div className="code-output__header">
-      <h3 className="prompt__heading">Generated Code</h3>
-        <Button
-          kind="ghost"
-          size="sm"
-          renderIcon={Copy}
-          iconDescription="Copy code"
-          onClick={handleCopy}
-          disabled={!code || isLoading}
-        >
-          Copy
-        </Button>
+        <h3 className="prompt__heading">Generated Code</h3>
+        <div className="code-output__actions">
+          <Button
+            kind="ghost"
+            size="sm"
+            renderIcon={Copy}
+            iconDescription="Copy code"
+            onClick={handleCopy}
+            disabled={!code || isLoading}
+          >
+            Copy
+          </Button>
+        </div>
       </div>
       
       {showCopyNotification && (
