@@ -1,6 +1,7 @@
 [build]
-  command = "npm run build"
+  command = "npm install && npm run build"
   publish = "build"
+  environment = { NODE_VERSION = "18.17.0" }
 
 [dev]
   command = "npm run dev"
@@ -9,4 +10,8 @@
   from = "/api/*"
   to = "http://localhost:3001/api/:splat"
   status = 200
-  force = true 
+  force = true
+
+[build.environment]
+  NODE_ENV = "production"
+  CI = "true" 
