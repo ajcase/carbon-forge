@@ -9,20 +9,20 @@
   height: 100%;
   background: var(--cds-layer);
   border-radius: 6px;
-  padding: 1.5rem;
+  padding: 0;
   gap: 1rem;
   position: relative;
 
   &__header {
     display: flex;
     justify-content: space-between;
-    align-items: center;
+    align-items: self-start;
   }
 
   &__actions {
     display: flex;
     gap: 0.5rem;
-    align-items: center;
+    align-items: top;
   }
 
   &__content {
