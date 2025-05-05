@@ -24,6 +24,10 @@ interface AppHeaderProps {
   onThemeSwitch: () => void;
 }
 
+interface HeaderContainerRenderProps {
+  isSideNavExpanded: boolean;
+}
+
 const AppHeader: React.FC<AppHeaderProps> = ({ 
   isSideNavExpanded, 
   onClickSideNavExpand,
@@ -32,7 +36,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
 }) => {
   return (
     <HeaderContainer
-      render={({ isSideNavExpanded }) => (
+      render={({ isSideNavExpanded }: HeaderContainerRenderProps) => (
         <Header aria-label="Carbon Prototyper">
           <SkipToContent />
           <HeaderMenuButton

@@ -7,6 +7,7 @@ Documentation resources for context:
 - https://react.carbondesignsystem.com/
 - https://carbondesignsystem.com/
 - https://www.ibm.com/watsonx/developer/
+= https://ibm.github.io/watsonx-ai-node-sdk/modules/1_6_x.WatsonXAI.html
 
 ##Key Features
 1. User Interface

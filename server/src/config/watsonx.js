@@ -12,7 +12,7 @@ if (missingEnvVars.length > 0) {
 const config = {
   apiKey: process.env.WATSONX_API_KEY,
   projectId: process.env.WATSONX_PROJECT_ID,
-  modelId: 'ibm/granite-13b-instruct-v2', // Using the recommended model for code generation
+  modelId: 'meta-llama/llama-3-3-70b-instruct', // Using the recommended model for code generation
   endpoint: process.env.WATSONX_ENDPOINT || 'https://us-south.ml.cloud.ibm.com',
   version: '2024-05-31', // Required version parameter
   maxTokens: 2048,
