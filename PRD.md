@@ -6,6 +6,7 @@ Carbon Prototyper is a web application that enables rapid prototyping using IBM'
 Documentation resources for context:
 - https://react.carbondesignsystem.com/
 - https://carbondesignsystem.com/
+- https://www.ibm.com/watsonx/developer/
 
 ##Key Features
 1. User Interface
