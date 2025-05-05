@@ -107,15 +107,6 @@
     color: $text-secondary;
     @include type-style('heading-01');
   }
-
-  .cds--select {
-    width: 200px;
-  }
-
-  .cds--tabs {
-    background-color: $field-01;
-  }
-
   .cds--btn {
     &:disabled {
       background-color: $interactive;

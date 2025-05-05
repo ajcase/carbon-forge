@@ -1,5 +1,4 @@
 .main-container {
-  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
 }
@@ -34,15 +33,6 @@
   border-radius: 6px;
   padding: 2rem 1.5rem;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-}
-
-.convert-controls {
-  display: flex;
-  flex-direction: column;
-  gap: 1.25rem;
-  width: 100%;
-  max-width: 500px;
-  margin: 0 auto;
 }
 
 .bx--select,

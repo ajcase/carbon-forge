@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Theme, ContentSwitcher, Switch, TextArea, Select, SelectItem, Button } from '@carbon/react';
+import { Theme, ContentSwitcher, Switch, TextArea, Select, SelectItem, Button, Column } from '@carbon/react';
 import Shell from './components/Shell';
 import { Prompt } from './components/Prompt/Prompt';
 import { Convert } from './components/Convert/Convert';
@@ -67,6 +67,7 @@ function App() {
 
   return (
     <Shell>
+      <Column lg={16}>
       <div className="main-container">
         <div className="app-content">
           <h1>Forge</h1>
@@ -120,6 +121,7 @@ function App() {
           )}
         </div>
       </div>
+      </Column>
     </Shell>
   );
 }

@@ -20,6 +20,7 @@ export const Convert: React.FC<ConvertProps> = ({ onConvert, isLoading }) => {
 
   return (
     <div className="convert-controls">
+    <h3 className="prompt__heading">What do you want to create?</h3>
       <Select
         id="design-system-select"
         labelText="Source Design System"

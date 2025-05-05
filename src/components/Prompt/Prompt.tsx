@@ -163,63 +163,6 @@ export const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
           </Form>
         </>
       )}
-      {tabIndex === 1 && (
-        <>
-          <h3 className="prompt__heading">What do you want to convert?</h3>
-          <div className="prompt__messages-container">
-            {messages.map((message, index) => (
-              <div
-                key={index}
-                className={`prompt__message prompt__message--${message.type}`}
-              >
-                <div className={`prompt__message-content prompt__message-content--${message.type}`}>
-                  {message.content}
-                </div>
-              </div>
-            ))}
-            <div ref={messagesEndRef} />
-          </div>
-          <Form onSubmit={handleSubmit} className="prompt__form">
-            <Stack gap={3}>
-              <FormGroup legendText="Source Design System">
-                <Select 
-                  id="design-system-select" 
-                  labelText="Convert from" 
-                  value={sourceDesignSystem}
-                  onChange={(e) => setSourceDesignSystem(e.target.value as DesignSystem)}
-                >
-                  <SelectItem value="material" text="Material UI" />
-                  <SelectItem value="bootstrap" text="Bootstrap" />
-                  <SelectItem value="ant" text="Ant Design" />
-                  <SelectItem value="chakra" text="Chakra UI" />
-                  <SelectItem value="other" text="Other" />
-                </Select>
-              </FormGroup>
-              <TextArea
-                id="convert-input"
-                labelText=""
-                placeholder="Paste your component code here..."
-                value={promptText}
-                onChange={(e) => setPromptText(e.target.value)}
-                rows={3}
-                decorator={aiLabel}
-                className="prompt__textarea"
-              />
-              <div className="prompt__button-container">
-                <Button
-                  kind="primary"
-                  type="submit"
-                  renderIcon={ArrowsHorizontal}
-                  disabled={!promptText.trim() || isLoading}
-                  onClick={() => trackPromptSubmission('convert')}
-                >
-                  {isLoading ? 'Converting...' : 'Convert to Carbon'}
-                </Button>
-              </div>
-            </Stack>
-          </Form>
-        </>
-      )}
     </Tile>
   );
 }; 

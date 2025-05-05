@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Content, Theme } from '@carbon/react';
+import { Content, Theme, Grid, Column } from '@carbon/react';
 import AppHeader from './Header';
 
 interface ShellProps {
@@ -27,7 +27,7 @@ const Shell: React.FC<ShellProps> = ({ children }) => {
         onThemeSwitch={handleThemeSwitch}
       />
       <Content style={{ backgroundColor: currentTheme === 'g100' ? '#161616' : '#ffffff', minHeight: 'calc(100vh - 48px)' }}>
-        {children}
+        <Grid>{children}</Grid>
       </Content>
     </Theme>
   );
