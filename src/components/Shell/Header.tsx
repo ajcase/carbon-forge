@@ -44,7 +44,7 @@ const AppHeader: React.FC<AppHeaderProps> = ({
             Forge
           </HeaderName>
           <HeaderNavigation aria-label="Carbon Prototyper">
-            <HeaderMenuItem href="#">Generate</HeaderMenuItem>
+            <HeaderMenuItem href="#">Playground</HeaderMenuItem>
             <HeaderMenuItem href="#">Migration</HeaderMenuItem>
             <HeaderMenuItem href="#">Components</HeaderMenuItem>
             <HeaderMenuItem href="#">FAQ</HeaderMenuItem>

@@ -1,20 +1,36 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { 
   TextArea, 
   Button, 
+  Stack, 
   Tile,
-  Stack,
-  Loading,
+  Form,
+  Select,
+  SelectItem,
+  Tabs,
+  Tab,
+  FormGroup,
+  Tag,
   AILabel
 } from '@carbon/react';
-import { Send, Watson, View, FolderOpen, Folders } from '@carbon/icons-react';
-import { generateCode } from '../../services/api';
+import { Send, ArrowsHorizontal } from '@carbon/icons-react';
 import './Prompt.scss';
 
-interface PromptProps {
-  onCodeGenerated: (code: string) => void;
+interface Message {
+  type: 'user' | 'ai';
+  content: string;
+  timestamp: Date;
 }
 
+interface PromptProps {
+  onSubmit: (prompt: string) => void;
+  isLoading: boolean;
+}
+
+type PromptMode = 'new' | 'convert';
+type DesignSystem = 'material' | 'bootstrap' | 'ant' | 'chakra' | 'other';
+
+// Sample quick examples
 const QUICK_EXAMPLES = [
   { title: 'Data Table', prompt: 'Create a data table with pagination for user management' },
   { title: 'Form', prompt: 'Build a multi-step user registration form with validation' },
@@ -22,71 +38,192 @@ const QUICK_EXAMPLES = [
   { title: 'Login', prompt: 'Create a login page with email and password fields plus social logins' },
 ];
 
-export const Prompt: React.FC<PromptProps> = ({ onCodeGenerated }) => {
-  const [prompt, setPrompt] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
+export const Prompt: React.FC<PromptProps> = ({ onSubmit, isLoading }) => {
+  const [promptText, setPromptText] = useState('');
+  const [promptMode, setPromptMode] = useState<PromptMode>('new');
+  const [sourceDesignSystem, setSourceDesignSystem] = useState<DesignSystem>('material');
+  const [useExample, setUseExample] = useState<boolean>(false);
+  const [tabIndex, setTabIndex] = useState(0);
+  const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const handleSubmit = async () => {
-    if (!prompt.trim()) return;
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
-    setIsLoading(true);
-    setError(null);
+  const handleTabChange = ({ selectedIndex }: { selectedIndex: number }) => {
+    setTabIndex(selectedIndex);
+    setPromptMode(selectedIndex === 0 ? 'new' : 'convert');
+  };
 
-    try {
-      const finalPrompt = `Create a Carbon Design System component for: ${prompt}`;
-      const response = await generateCode(finalPrompt);
-      onCodeGenerated(response.code);
-    } catch (err) {
-      setError('Failed to generate code. Please try again.');
-      console.error('Error:', err);
-    } finally {
-      setIsLoading(false);
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!promptText.trim()) return;
+    let finalPrompt = promptText;
+    setMessages(prev => [...prev, {
+      type: 'user',
+      content: finalPrompt,
+      timestamp: new Date()
+    }]);
+    if (promptMode === 'convert') {
+      finalPrompt = `Convert the following ${getDesignSystemLabel(sourceDesignSystem)} component to Carbon Design System: ${promptText}`;
+    } else {
+      finalPrompt = `Create a Carbon Design System component for: ${promptText}`;
+    }
+    onSubmit(finalPrompt);
+    setPromptText('');
+  };
+
+  const getDesignSystemLabel = (ds: DesignSystem): string => {
+    switch (ds) {
+      case 'material': return 'Material UI';
+      case 'bootstrap': return 'Bootstrap';
+      case 'ant': return 'Ant Design';
+      case 'chakra': return 'Chakra UI';
+      case 'other': return 'Other Design System';
     }
   };
 
-  const aiLabel = (
-    <AILabel className="ai-label-container" />
-  );
+  const handleExampleClick = (example: string) => {
+    setPromptText(example);
+    setUseExample(true);
+  };
+
+  const trackPromptSubmission = (mode: PromptMode) => {
+    console.log('Analytics: Prompt submitted', { 
+      mode, 
+      designSystem: promptMode === 'convert' ? sourceDesignSystem : null 
+    });
+  };
+
+  const aiLabel = <AILabel className="ai-label-container" />;
 
   return (
-    <Tile className="prompt">
-        <h3>What do you want to create?</h3>
-      <Stack gap={3} className="prompt__content">
-        <TextArea
-          labelText="Describe the component you want to create"
-          placeholder="e.g., Create a data table with pagination and sorting"
-          value={prompt}
-          onChange={(e) => setPrompt(e.target.value)}
-          disabled={isLoading}
-          className="prompt__textarea"
-          decorator={aiLabel}
-        />
-
-        <div className="prompt__actions">
-          <Button
-            kind="primary"
-            renderIcon={Send}
-            onClick={handleSubmit}
-            disabled={!prompt.trim() || isLoading}
-          >
-            {isLoading ? (
-              <>
-                <Loading small withOverlay={false} />
-                <span style={{ marginLeft: '8px' }}>Generating...</span>
-              </>
-            ) : (
-              'Generate Code'
+    <Tile className="prompt__container">
+      <Tabs selectedIndex={tabIndex} onChange={handleTabChange}>
+        <Tab>New Component</Tab>
+        <Tab>Convert Component</Tab>
+      </Tabs>
+      {tabIndex === 0 && (
+        <>
+          <h3 className="prompt__heading">What do you want to create?</h3>
+          <div className="prompt__messages-container">
+            {messages.length === 0 && (
+              <div className="prompt__examples-container">
+                <h4 className="prompt__examples-heading">Quick Examples</h4>
+                <div className="prompt__examples-list">
+                  {QUICK_EXAMPLES.map((example, index) => (
+                    <Tag 
+                      key={index} 
+                      type="blue" 
+                      onClick={() => handleExampleClick(example.prompt)}
+                      className="prompt__example-tag"
+                    >
+                      {example.title}
+                    </Tag>
+                  ))}
+                </div>
+              </div>
             )}
-          </Button>
-        </div>
-
-        {error && (
-          <div className="prompt__error">
-            {error}
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`prompt__message prompt__message--${message.type}`}
+              >
+                <div className={`prompt__message-content prompt__message-content--${message.type}`}>
+                  {message.content}
+                </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
           </div>
-        )}
-      </Stack>
+          <Form onSubmit={handleSubmit} className="prompt__form">
+            <Stack gap={3}>
+              <TextArea
+                id="prompt-input"
+                labelText=""
+                placeholder="Type your message here..."
+                value={promptText}
+                onChange={(e) => {
+                  setPromptText(e.target.value);
+                  setUseExample(false);
+                }}
+                rows={3}
+                decorator={aiLabel}
+                className="prompt__textarea"
+              />
+              <div className="prompt__button-container">
+                <Button
+                  kind="primary"
+                  type="submit"
+                  renderIcon={Send}
+                  disabled={!promptText.trim() || isLoading}
+                  onClick={() => trackPromptSubmission('new')}
+                >
+                  {isLoading ? 'Generating...' : 'Send'}
+                </Button>
+              </div>
+            </Stack>
+          </Form>
+        </>
+      )}
+      {tabIndex === 1 && (
+        <>
+          <h3 className="prompt__heading">What do you want to convert?</h3>
+          <div className="prompt__messages-container">
+            {messages.map((message, index) => (
+              <div
+                key={index}
+                className={`prompt__message prompt__message--${message.type}`}
+              >
+                <div className={`prompt__message-content prompt__message-content--${message.type}`}>
+                  {message.content}
+                </div>
+              </div>
+            ))}
+            <div ref={messagesEndRef} />
+          </div>
+          <Form onSubmit={handleSubmit} className="prompt__form">
+            <Stack gap={3}>
+              <FormGroup legendText="Source Design System">
+                <Select 
+                  id="design-system-select" 
+                  labelText="Convert from" 
+                  value={sourceDesignSystem}
+                  onChange={(e) => setSourceDesignSystem(e.target.value as DesignSystem)}
+                >
+                  <SelectItem value="material" text="Material UI" />
+                  <SelectItem value="bootstrap" text="Bootstrap" />
+                  <SelectItem value="ant" text="Ant Design" />
+                  <SelectItem value="chakra" text="Chakra UI" />
+                  <SelectItem value="other" text="Other" />
+                </Select>
+              </FormGroup>
+              <TextArea
+                id="convert-input"
+                labelText=""
+                placeholder="Paste your component code here..."
+                value={promptText}
+                onChange={(e) => setPromptText(e.target.value)}
+                rows={3}
+                decorator={aiLabel}
+                className="prompt__textarea"
+              />
+              <div className="prompt__button-container">
+                <Button
+                  kind="primary"
+                  type="submit"
+                  renderIcon={ArrowsHorizontal}
+                  disabled={!promptText.trim() || isLoading}
+                  onClick={() => trackPromptSubmission('convert')}
+                >
+                  {isLoading ? 'Converting...' : 'Convert to Carbon'}
+                </Button>
+              </div>
+            </Stack>
+          </Form>
+        </>
+      )}
     </Tile>
   );
 }; 

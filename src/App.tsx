@@ -12,6 +12,7 @@ function App() {
   const [sourceDesignSystem, setSourceDesignSystem] = useState('');
   const [targetFramework, setTargetFramework] = useState('react');
   const [activeMode, setActiveMode] = useState(0);
+  const [selectedModel, setSelectedModel] = useState('granite');
 
   const handleModeChange = ({ index }: { index?: number }) => {
     if (typeof index === 'number') {
@@ -71,19 +72,35 @@ function App() {
           <p className="app-description">
             Transform your UI. Accelerate your migration to Carbon.
           </p>
-          <ContentSwitcher
-            onChange={handleModeChange}
-            selectedIndex={activeMode}
-            className="mode-switcher"
-            size="lg"
-          >
-            <Switch name="generate" text="Generate" />
-            <Switch name="convert" text="Convert" />
-          </ContentSwitcher>
+          <div className="switchers-container">
+            <ContentSwitcher
+              onChange={handleModeChange}
+              selectedIndex={activeMode}
+              className="mode-switcher"
+              size="lg"
+            >
+              <Switch name="generate" text="Generate" />
+              <Switch name="convert" text="Convert" />
+            </ContentSwitcher>
+            <div className="model-group">
+              <span className="model-label">Model</span>
+              <Select
+                id="model-select"
+                value={selectedModel}
+                onChange={(e) => setSelectedModel(e.target.value)}
+                className="model-select"
+                size="lg"
+                labelText=""
+              >
+                <SelectItem value="granite" text="Granite" />
+                <SelectItem value="llama-3-3-70b-instruct" text="Llama 3" />
+              </Select>
+            </div>
+          </div>
           {activeMode === 0 && (
             <div className="app-layout">
               <div className="app-panel">
-                <Prompt onCodeGenerated={setGeneratedCode} />
+                <Prompt onSubmit={handleGenerateCode} isLoading={isLoading} />
               </div>
               <div className="app-panel">
                 <CodeOutput code={generatedCode} language="react" isLoading={isLoading} />

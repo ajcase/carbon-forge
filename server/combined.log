@@ -76,3 +76,21 @@
 {"level":"info","message":"Server running on port 3001"}
 {"codeLength":1103,"designSystem":"material-ui","framework":"react","level":"info","message":"Converting code:"}
 {"convertedLength":1066,"level":"info","message":"Code conversion successful:","originalLength":1103}
+{"level":"info","message":"Initializing WatsonXAI client"}
+{"level":"info","message":"Watsonx authentication successful"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"level":"info","message":"Server running on port 3001"}
+{"level":"info","message":"Initializing WatsonXAI client"}
+{"level":"info","message":"Watsonx authentication successful"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"level":"info","message":"Server running on port 3001"}
+{"level":"info","message":"Initializing WatsonXAI client"}
+{"level":"info","message":"Watsonx authentication successful"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"level":"info","message":"Server running on port 3001"}
+{"codeLength":1103,"designSystem":"material-ui","framework":"react","level":"info","message":"Converting code:"}
+{"convertedLength":1076,"level":"info","message":"Code conversion successful:","originalLength":1103}
+{"level":"info","message":"Initializing WatsonXAI client"}
+{"level":"info","message":"Watsonx authentication successful"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"level":"info","message":"Server running on port 3001"}

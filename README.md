@@ -274,3 +274,9 @@ To learn React, check out the [React documentation](https://reactjs.org/).
 - Create the API proxy service for the frontend
 - Add live preview capability for generated components
 - Add more examples and improved documentation
+
+### Version 0.3.1 - Vertical Mode Switcher and Fixed Model Selector
+
+**Styling Changes**
+- Updated `.switchers-container` to vertical stacking.
+- Pinned `.model-group` to the top-right corner of the viewport.

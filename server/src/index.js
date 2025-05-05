@@ -252,6 +252,7 @@ Requirements:
 5. Preserve component structure and props
 6. Add proper accessibility attributes
 7. Follow Carbon Design System naming conventions
+8. Never hallucinate, only use components that are part of the Carbon Design System.
 
 Source code in ${sourceDesignSystem}:
 ${sourceCode}

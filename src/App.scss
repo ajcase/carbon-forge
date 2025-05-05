@@ -11,10 +11,11 @@
 }
 
 .mode-switcher {
-  margin: 0 0 2rem 0;
+  margin: 0;
   width: auto;
   display: flex;
   justify-content: flex-start;
+  min-width: 300px;
 }
 
 .app-layout {
@@ -52,6 +53,31 @@
 .bx--btn {
   align-self: flex-end;
   margin-top: 1rem;
+}
+
+.switchers-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  margin-bottom: 2rem;
+}
+
+.model-group {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.model-label {
+  font-size: 1rem;
+  color: var(--cds-text-secondary);
+  margin-right: 0.25rem;
+}
+
+.model-select {
+  width: 200px;
+  margin-bottom: 0;
 }
 
 @media (max-width: 900px) {
