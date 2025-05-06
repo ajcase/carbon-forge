@@ -15,8 +15,20 @@ export const handler = async function(event, context) {
 
     // Get configuration with environment variables
     const watsonxConfig = getConfig();
+    
+    // Log configuration (excluding sensitive data)
+    console.log('WatsonX Configuration:', {
+      endpoint: watsonxConfig.endpoint,
+      version: watsonxConfig.version,
+      modelId: watsonxConfig.modelId,
+      projectId: watsonxConfig.projectId,
+      hasApiKey: !!watsonxConfig.apiKey,
+      maxTokens: watsonxConfig.maxTokens,
+      temperature: watsonxConfig.temperature
+    });
 
     // Initialize Watsonx.ai client
+    console.log('Initializing WatsonX client with endpoint:', watsonxConfig.endpoint);
     const watsonxAIService = WatsonXAI.newInstance({
       authenticator: new IamAuthenticator({
         apikey: watsonxConfig.apiKey,
@@ -28,6 +40,17 @@ export const handler = async function(event, context) {
     // Parse the request body
     const body = JSON.parse(event.body);
     const { endpoint, prompt, model, framework, previousCode, sourceCode, sourceDesignSystem, targetFramework } = body;
+
+    console.log('Request details:', {
+      endpoint,
+      framework,
+      model,
+      hasPrompt: !!prompt,
+      hasPreviousCode: !!previousCode,
+      hasSourceCode: !!sourceCode,
+      sourceDesignSystem,
+      targetFramework
+    });
 
     // Route based on endpoint
     switch (endpoint) {
@@ -82,7 +105,19 @@ Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} co
           }
         };
 
+        console.log('Generate request payload:', {
+          modelId: requestPayload.modelId,
+          projectId: requestPayload.projectId,
+          inputLength: requestPayload.input.length,
+          parameters: requestPayload.parameters
+        });
+
         const response = await watsonxAIService.generateText(requestPayload);
+        console.log('Generate response:', {
+          hasResults: !!response.result?.results,
+          resultCount: response.result?.results?.length,
+          hasGeneratedText: !!response.result?.results?.[0]?.generated_text
+        });
 
         if (!response.result?.results?.[0]?.generated_text) {
           return {
@@ -119,6 +154,11 @@ Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} co
           };
         }
 
+        console.log('Refine request:', {
+          promptLength: prompt.length,
+          previousCodeLength: previousCode.length
+        });
+
         const response = await watsonxAIService.generateText({
           input: `You are a React developer specializing in IBM Carbon Design System. Your task is to refine and improve existing React code following Carbon Design System best practices.
 
@@ -148,6 +188,12 @@ Please provide the complete updated React component code with all necessary chan
           }
         });
 
+        console.log('Refine response:', {
+          hasResults: !!response.result?.results,
+          resultCount: response.result?.results?.length,
+          hasGeneratedText: !!response.result?.results?.[0]?.generated_text
+        });
+
         const generatedCode = response.result.results[0].generated_text
           .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '')
           .replace(/```\n?/g, '')
@@ -172,6 +218,12 @@ Please provide the complete updated React component code with all necessary chan
             body: JSON.stringify({ error: 'Source code, design system, and target framework are required' })
           };
         }
+
+        console.log('Convert request:', {
+          sourceDesignSystem,
+          targetFramework,
+          sourceCodeLength: sourceCode.length
+        });
 
         // Create mapping context for the prompt
         const mappingContext = muiToCarbonMapping.default
@@ -224,6 +276,12 @@ Please provide the complete converted code using Carbon Design System ${targetFr
           }
         });
 
+        console.log('Convert response:', {
+          hasResults: !!response.result?.results,
+          resultCount: response.result?.results?.length,
+          hasGeneratedText: !!response.result?.results?.[0]?.generated_text
+        });
+
         const convertedCode = response.result.results[0].generated_text
           .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '')
           .replace(/```\n?/g, '')
@@ -242,13 +300,20 @@ Please provide the complete converted code using Carbon Design System ${targetFr
       }
 
       default:
+        console.log('Invalid endpoint requested:', endpoint);
         return {
           statusCode: 400,
           body: JSON.stringify({ error: 'Invalid endpoint' })
         };
     }
   } catch (error) {
-    console.error('Error:', error);
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack,
+      response: error.response?.data,
+      endpoint: error.endpoint,
+      statusCode: error.statusCode
+    });
     return {
       statusCode: 500,
       body: JSON.stringify({ 
