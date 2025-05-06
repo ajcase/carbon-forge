@@ -6,11 +6,11 @@
 
 [dev]
   command = "npm run dev"
+  targetPort = 3000
 
 [functions]
   node_bundler = "esbuild"
   external_node_modules = ["@ibm-cloud/watsonx-ai", "ibm-cloud-sdk-core"]
-  timeout = 60
 
 [[redirects]]
   from = "/api/*"

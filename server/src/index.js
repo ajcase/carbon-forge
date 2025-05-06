@@ -83,6 +83,9 @@ app.use(helmet());
 app.use(cors());
 app.use(express.json());
 
+// Trust proxy for rate limiting behind reverse proxy
+app.set('trust proxy', 1);
+
 // Rate limiting
 const limiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
