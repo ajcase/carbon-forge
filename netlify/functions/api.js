@@ -39,10 +39,9 @@ export const handler = async function(event, context) {
 
     // Parse the request body
     const body = JSON.parse(event.body);
-    const { endpoint, prompt, model, framework, previousCode, sourceCode, sourceDesignSystem, targetFramework } = body;
+    const { prompt, model, framework, previousCode, sourceCode, sourceDesignSystem, targetFramework } = body;
 
     console.log('Request details:', {
-      endpoint,
       framework,
       model,
       hasPrompt: !!prompt,
@@ -52,8 +51,25 @@ export const handler = async function(event, context) {
       targetFramework
     });
 
-    // Route based on endpoint
-    switch (endpoint) {
+    // Determine the operation type based on the request parameters
+    let operation;
+    if (sourceCode && sourceDesignSystem && targetFramework) {
+      operation = 'convert';
+    } else if (prompt && previousCode) {
+      operation = 'refine';
+    } else if (prompt) {
+      operation = 'generate';
+    } else {
+      return {
+        statusCode: 400,
+        body: JSON.stringify({ error: 'Invalid request parameters' })
+      };
+    }
+
+    console.log('Determined operation:', operation);
+
+    // Route based on operation
+    switch (operation) {
       case 'generate': {
         if (!prompt) {
           return {
@@ -300,10 +316,10 @@ Please provide the complete converted code using Carbon Design System ${targetFr
       }
 
       default:
-        console.log('Invalid endpoint requested:', endpoint);
+        console.log('Invalid operation:', operation);
         return {
           statusCode: 400,
-          body: JSON.stringify({ error: 'Invalid endpoint' })
+          body: JSON.stringify({ error: 'Invalid operation' })
         };
     }
   } catch (error) {
