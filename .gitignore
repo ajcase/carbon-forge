@@ -3468,3 +3468,4 @@ netlify/functions/node_modules/.package-lock.json
 netlify/functions/node_modules/.bin/uuid
 netlify/functions/node_modules/.bin/semver
 netlify/functions/node_modules/.bin/mustache
+server/error.log

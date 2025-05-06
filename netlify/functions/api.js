@@ -10,13 +10,16 @@ export const handler = async function(event, context) {
   try {
     const { WatsonXAI } = await import('@ibm-cloud/watsonx-ai');
     const { IamAuthenticator } = await import('ibm-cloud-sdk-core');
+    const watsonxConfig = await import('./config/watsonx.js');
+    const muiToCarbonMapping = await import('./config/mui-to-carbon.json', { assert: { type: 'json' } });
 
     // Initialize Watsonx.ai client
-    const watsonxAIService = new WatsonXAI({
+    const watsonxAIService = WatsonXAI.newInstance({
       authenticator: new IamAuthenticator({
-        apikey: process.env.WATSONX_API_KEY,
+        apikey: watsonxConfig.default.apiKey,
       }),
-      serviceUrl: process.env.WATSONX_ENDPOINT,
+      serviceUrl: watsonxConfig.default.endpoint,
+      version: watsonxConfig.default.version
     });
 
     // Parse the request body
@@ -65,14 +68,14 @@ ${frameworkSpecificRequirements}
 User request: ${prompt}
 
 Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} code with all necessary imports and proper structure. Do not include any additional text, HTML tags, or end-of-text markers.`,
-          modelId: model || process.env.WATSONX_MODEL_ID,
-          projectId: process.env.WATSONX_PROJECT_ID,
+          modelId: model || watsonxConfig.default.modelId,
+          projectId: watsonxConfig.default.projectId,
           parameters: {
-            max_new_tokens: 2048,
-            temperature: 0.7,
-            top_p: 0.9,
-            frequency_penalty: 0,
-            presence_penalty: 0
+            max_new_tokens: watsonxConfig.default.maxTokens,
+            temperature: watsonxConfig.default.temperature,
+            top_p: watsonxConfig.default.topP,
+            frequency_penalty: watsonxConfig.default.frequencyPenalty,
+            presence_penalty: watsonxConfig.default.presencePenalty
           }
         };
 
@@ -131,14 +134,14 @@ ${previousCode}
 Requested changes: ${prompt}
 
 Please provide the complete updated React component code with all necessary changes.`,
-          modelId: model || process.env.WATSONX_MODEL_ID,
-          projectId: process.env.WATSONX_PROJECT_ID,
+          modelId: model || watsonxConfig.default.modelId,
+          projectId: watsonxConfig.default.projectId,
           parameters: {
-            max_new_tokens: 2048,
-            temperature: 0.7,
-            top_p: 0.9,
-            frequency_penalty: 0,
-            presence_penalty: 0
+            max_new_tokens: watsonxConfig.default.maxTokens,
+            temperature: watsonxConfig.default.temperature,
+            top_p: watsonxConfig.default.topP,
+            frequency_penalty: watsonxConfig.default.frequencyPenalty,
+            presence_penalty: watsonxConfig.default.presencePenalty
           }
         });
 
@@ -154,7 +157,7 @@ Please provide the complete updated React component code with all necessary chan
           statusCode: 200,
           body: JSON.stringify({ 
             code: generatedCode,
-            model: model || process.env.WATSONX_MODEL_ID
+            model: model || watsonxConfig.default.modelId
           })
         };
       }
@@ -167,9 +170,14 @@ Please provide the complete updated React component code with all necessary chan
           };
         }
 
+        // Create mapping context for the prompt
+        const mappingContext = muiToCarbonMapping.default
+          .map(item => `${item.material_component} -> ${item.carbon_component} (${item.alignment_notes})`)
+          .join('\n');
+
         const frameworkSpecificRequirements = targetFramework === 'react' ? `
 Requirements:
-1. Convert all UI components to their Carbon Design System equivalents
+1. Convert all UI components to their Carbon Design System equivalents using the mapping above
 2. If a component is not in the mapping, do not make up a component - use the closest equivalent
 3. Maintain the same functionality and behavior
 4. Use proper Carbon Design System patterns and best practices
@@ -192,20 +200,24 @@ Requirements:
         const response = await watsonxAIService.generateText({
           input: `You are a ${targetFramework === 'react' ? 'React' : 'Web Components'} developer specializing in IBM Carbon Design System. Your task is to convert code from ${sourceDesignSystem} to Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}.
 
+IMPORTANT: You MUST use the following component mapping for conversion:
+
+${mappingContext}
+
 ${frameworkSpecificRequirements}
 
 Source code in ${sourceDesignSystem}:
 ${sourceCode}
 
 Please provide the complete converted code using Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}. Only return code, do not return any other text.`,
-          modelId: model || process.env.WATSONX_MODEL_ID,
-          projectId: process.env.WATSONX_PROJECT_ID,
+          modelId: model || watsonxConfig.default.modelId,
+          projectId: watsonxConfig.default.projectId,
           parameters: {
-            max_new_tokens: 2048,
-            temperature: 0.7,
-            top_p: 0.9,
-            frequency_penalty: 0,
-            presence_penalty: 0
+            max_new_tokens: watsonxConfig.default.maxTokens,
+            temperature: watsonxConfig.default.temperature,
+            top_p: watsonxConfig.default.topP,
+            frequency_penalty: watsonxConfig.default.frequencyPenalty,
+            presence_penalty: watsonxConfig.default.presencePenalty
           }
         });
 
@@ -221,7 +233,7 @@ Please provide the complete converted code using Carbon Design System ${targetFr
           statusCode: 200,
           body: JSON.stringify({ 
             code: convertedCode,
-            model: model || process.env.WATSONX_MODEL_ID
+            model: model || watsonxConfig.default.modelId
           })
         };
       }

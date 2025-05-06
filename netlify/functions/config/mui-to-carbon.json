@@ -1,0 +1,133 @@
+[
+    {
+        "material_component": "Box",
+        "carbon_component": "No direct equivalent; similar roles fulfilled by Grid, Tiles, Content Block",
+        "alignment_notes": "Material UI Box is a generic, theme-aware container (like a styled <div>) with flexible styling via sx prop and component override. Carbon uses more specialized layout and container components instead of a generic box."
+      },
+    {
+      "material_component": "Button",
+      "carbon_component": "Button",
+      "alignment_notes": "Both provide primary, secondary, and tertiary variants with hover/focus states."
+    },
+    {
+      "material_component": "Floating Action Button (FAB)",
+      "carbon_component": "Icon Button",
+      "alignment_notes": "FAB emphasizes primary action while Carbon uses icon buttons for similar purposes."
+    },
+    {
+      "material_component": "Chips",
+      "carbon_component": "Tags",
+      "alignment_notes": "Both handle small interactive elements, though Carbon tags focus more on categorization."
+    },
+    {
+      "material_component": "Cards",
+      "carbon_component": "Tiles",
+      "alignment_notes": "Material's elevated cards vs Carbon's flat tiles for content grouping."
+    },
+    {
+      "material_component": "Dialogs",
+      "carbon_component": "Modals",
+      "alignment_notes": "Similar modal dialog patterns with header/content/footer structure."
+    },
+    {
+      "material_component": "Snackbars",
+      "carbon_component": "Notifications",
+      "alignment_notes": "Transient messaging components with timeout controls."
+    },
+    {
+      "material_component": "Text Fields",
+      "carbon_component": "Text Inputs",
+      "alignment_notes": "Equivalent form inputs with validation states."
+    },
+    {
+      "material_component": "Checkboxes",
+      "carbon_component": "Checkboxes",
+      "alignment_notes": "Identical selection controls with indeterminate states."
+    },
+    {
+      "material_component": "Radio Buttons",
+      "carbon_component": "Radio Buttons",
+      "alignment_notes": "Single-select circular controls with similar grouping patterns."
+    },
+    {
+      "material_component": "Sliders",
+      "carbon_component": "Sliders",
+      "alignment_notes": "Range selection components with discrete/continuous modes."
+    },
+    {
+      "material_component": "Tabs",
+      "carbon_component": "Tabs",
+      "alignment_notes": "Both support horizontal navigation with indicator bars."
+    },
+    {
+      "material_component": "Bottom Navigation",
+      "carbon_component": "UI Shell",
+      "alignment_notes": "Material's bottom bar vs Carbon's header-focused UI Shell."
+    },
+    {
+      "material_component": "Progress Indicators",
+      "carbon_component": "Progress Bars",
+      "alignment_notes": "Linear/circular loading indicators with determinate states."
+    },
+    {
+      "material_component": "Dropdown Menus",
+      "carbon_component": "Select",
+      "alignment_notes": "Single-select dropdowns with search/filter capabilities."
+    },
+    {
+      "material_component": "Dividers",
+      "carbon_component": "Structured List",
+      "alignment_notes": "Material uses standalone dividers vs Carbon's list-integrated separators."
+    },
+    {
+      "material_component": "Date Pickers",
+      "carbon_component": "Date Pickers",
+      "alignment_notes": "Similar calendar components with range selection."
+    },
+    {
+      "material_component": "List",
+      "carbon_component": "List",
+      "alignment_notes": "Vertical item groupings with nested list support."
+    },
+    {
+      "material_component": "Data Table",
+      "carbon_component": "Data Table",
+      "alignment_notes": "Carbon's enterprise-focused tables vs Material's simplified version."
+    },
+    {
+      "material_component": "App Bar",
+      "carbon_component": "UI Shell Header",
+      "alignment_notes": "Top navigation bars with search/action items."
+    },
+    {
+      "material_component": "Drawer",
+      "carbon_component": "UI Shell Navigation",
+      "alignment_notes": "Side navigation panels with collapsible sections."
+    },
+    {
+      "material_component": "Chip",
+      "carbon_component": "Tag",
+      "alignment_notes": "Multi-select chips vs Carbon's categorization tags."
+    },
+    {
+      "material_component": "Stepper",
+      "carbon_component": "Progress Indicator",
+      "alignment_notes": "Sequential workflow visualization components."
+    },
+    {
+      "material_component": "Tooltip",
+      "carbon_component": "Tooltip",
+      "alignment_notes": "Contextual hover information displays."
+    },
+    {
+      "material_component": "Avatar",
+      "carbon_component": "Avatar",
+      "alignment_notes": "User/profile image containers with status indicators."
+    },
+    {
+      "material_component": "Badge",
+      "carbon_component": "Badge",
+      "alignment_notes": "Notification counters and status indicators."
+    }
+  ]
+  
