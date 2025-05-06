@@ -113,7 +113,14 @@ export const handler = async function(event, context) {
           };
         }
 
-        const frameworkSpecificRequirements = framework === 'react' ? `
+        if (framework !== 'react') {
+          return {
+            statusCode: 400,
+            body: JSON.stringify({ error: 'Only React framework is supported for code generation' })
+          };
+        }
+
+        const frameworkSpecificRequirements = `
 Requirements:
 1. Always include necessary imports from '@carbon/react'
 2. Use proper component structure with TypeScript types
@@ -122,29 +129,16 @@ Requirements:
 5. Follow Carbon Design System naming conventions
 6. Include proper accessibility attributes
 7. Use Carbon's built-in components and utilities
-8. Never hallucinate, only use components that are part of the Carbon Design System.` : `
-Requirements:
-1. Always include necessary imports from '@carbon/web-components'
-2. Use proper custom element naming (kebab-case)
-3. Include proper attributes and properties
-4. Add comments for complex logic
-5. Follow Carbon Design System naming conventions
-6. Include proper accessibility attributes
-7. Use Carbon's built-in web components
-8. Never hallucinate, only use components that are part of the Carbon Design System.
-9. Use proper event handling with custom events
-10. Include proper shadow DOM usage where applicable
-11. Return ONLY the Web Components code without any HTML tags or end-of-text markers
-12. Do not include any wrapper elements or additional text`;
+8. Never hallucinate, only use components that are part of the Carbon Design System.`;
 
         const requestPayload = {
-          input: `You are a ${framework === 'react' ? 'React' : 'Web Components'} developer specializing in IBM Carbon Design System. Your task is to generate clean, efficient ${framework === 'react' ? 'React' : 'Web Components'} code following Carbon Design System best practices.
+          input: `You are a React developer specializing in IBM Carbon Design System. Your task is to generate clean, efficient React code following Carbon Design System best practices.
 
 ${frameworkSpecificRequirements}
 
 User request: ${prompt}
 
-Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} code with all necessary imports and proper structure. Do not include any additional text, HTML tags, or end-of-text markers.`,
+Please provide ONLY the React code with all necessary imports and proper structure. Do not include any additional text, HTML tags, or end-of-text markers.`,
           modelId: model || watsonxConfig.modelId,
           projectId: watsonxConfig.projectId,
           parameters: {
