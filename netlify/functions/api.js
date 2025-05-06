@@ -10,16 +10,19 @@ export const handler = async function(event, context) {
   try {
     const { WatsonXAI } = await import('@ibm-cloud/watsonx-ai');
     const { IamAuthenticator } = await import('ibm-cloud-sdk-core');
-    const watsonxConfig = await import('./config/watsonx.js');
+    const { getConfig } = await import('./config/watsonx.js');
     const muiToCarbonMapping = await import('./config/mui-to-carbon.json', { assert: { type: 'json' } });
+
+    // Get configuration with environment variables
+    const watsonxConfig = getConfig();
 
     // Initialize Watsonx.ai client
     const watsonxAIService = WatsonXAI.newInstance({
       authenticator: new IamAuthenticator({
-        apikey: watsonxConfig.default.apiKey,
+        apikey: watsonxConfig.apiKey,
       }),
-      serviceUrl: watsonxConfig.default.endpoint,
-      version: watsonxConfig.default.version
+      serviceUrl: watsonxConfig.endpoint,
+      version: watsonxConfig.version
     });
 
     // Parse the request body
@@ -68,14 +71,14 @@ ${frameworkSpecificRequirements}
 User request: ${prompt}
 
 Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} code with all necessary imports and proper structure. Do not include any additional text, HTML tags, or end-of-text markers.`,
-          modelId: model || watsonxConfig.default.modelId,
-          projectId: watsonxConfig.default.projectId,
+          modelId: model || watsonxConfig.modelId,
+          projectId: watsonxConfig.projectId,
           parameters: {
-            max_new_tokens: watsonxConfig.default.maxTokens,
-            temperature: watsonxConfig.default.temperature,
-            top_p: watsonxConfig.default.topP,
-            frequency_penalty: watsonxConfig.default.frequencyPenalty,
-            presence_penalty: watsonxConfig.default.presencePenalty
+            max_new_tokens: watsonxConfig.maxTokens,
+            temperature: watsonxConfig.temperature,
+            top_p: watsonxConfig.topP,
+            frequency_penalty: watsonxConfig.frequencyPenalty,
+            presence_penalty: watsonxConfig.presencePenalty
           }
         };
 
@@ -134,14 +137,14 @@ ${previousCode}
 Requested changes: ${prompt}
 
 Please provide the complete updated React component code with all necessary changes.`,
-          modelId: model || watsonxConfig.default.modelId,
-          projectId: watsonxConfig.default.projectId,
+          modelId: model || watsonxConfig.modelId,
+          projectId: watsonxConfig.projectId,
           parameters: {
-            max_new_tokens: watsonxConfig.default.maxTokens,
-            temperature: watsonxConfig.default.temperature,
-            top_p: watsonxConfig.default.topP,
-            frequency_penalty: watsonxConfig.default.frequencyPenalty,
-            presence_penalty: watsonxConfig.default.presencePenalty
+            max_new_tokens: watsonxConfig.maxTokens,
+            temperature: watsonxConfig.temperature,
+            top_p: watsonxConfig.topP,
+            frequency_penalty: watsonxConfig.frequencyPenalty,
+            presence_penalty: watsonxConfig.presencePenalty
           }
         });
 
@@ -157,7 +160,7 @@ Please provide the complete updated React component code with all necessary chan
           statusCode: 200,
           body: JSON.stringify({ 
             code: generatedCode,
-            model: model || watsonxConfig.default.modelId
+            model: model || watsonxConfig.modelId
           })
         };
       }
@@ -210,14 +213,14 @@ Source code in ${sourceDesignSystem}:
 ${sourceCode}
 
 Please provide the complete converted code using Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}. Only return code, do not return any other text.`,
-          modelId: model || watsonxConfig.default.modelId,
-          projectId: watsonxConfig.default.projectId,
+          modelId: model || watsonxConfig.modelId,
+          projectId: watsonxConfig.projectId,
           parameters: {
-            max_new_tokens: watsonxConfig.default.maxTokens,
-            temperature: watsonxConfig.default.temperature,
-            top_p: watsonxConfig.default.topP,
-            frequency_penalty: watsonxConfig.default.frequencyPenalty,
-            presence_penalty: watsonxConfig.default.presencePenalty
+            max_new_tokens: watsonxConfig.maxTokens,
+            temperature: watsonxConfig.temperature,
+            top_p: watsonxConfig.topP,
+            frequency_penalty: watsonxConfig.frequencyPenalty,
+            presence_penalty: watsonxConfig.presencePenalty
           }
         });
 
@@ -233,7 +236,7 @@ Please provide the complete converted code using Carbon Design System ${targetFr
           statusCode: 200,
           body: JSON.stringify({ 
             code: convertedCode,
-            model: model || watsonxConfig.default.modelId
+            model: model || watsonxConfig.modelId
           })
         };
       }
