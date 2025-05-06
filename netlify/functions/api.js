@@ -37,6 +37,34 @@ export const handler = async function(event, context) {
       version: watsonxConfig.version
     });
 
+    // Test the authentication by making a simple request
+    console.log('Testing WatsonX authentication...');
+    try {
+      const testResponse = await watsonxAIService.generateText({
+        input: 'Test',
+        modelId: watsonxConfig.modelId,
+        projectId: watsonxConfig.projectId,
+        parameters: {
+          max_new_tokens: 10
+        }
+      });
+      console.log('WatsonX authentication successful');
+    } catch (authError) {
+      console.error('WatsonX authentication failed:', {
+        message: authError.message,
+        stack: authError.stack,
+        response: authError.response?.data
+      });
+      return {
+        statusCode: 500,
+        body: JSON.stringify({ 
+          error: 'Authentication failed', 
+          details: authError.message,
+          response: authError.response?.data 
+        })
+      };
+    }
+
     // Parse the request body
     const body = JSON.parse(event.body);
     const { prompt, model, framework, previousCode, sourceCode, sourceDesignSystem, targetFramework } = body;
