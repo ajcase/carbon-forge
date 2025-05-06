@@ -24,14 +24,15 @@ export const handler = async function(event, context) {
       projectId: watsonxConfig.projectId,
       hasApiKey: !!watsonxConfig.apiKey,
       maxTokens: watsonxConfig.maxTokens,
-      temperature: watsonxConfig.temperature
+      temperature: watsonxConfig.temperature,
+      authType: watsonxConfig.authType
     });
 
     // Initialize Watsonx.ai client
     console.log('Initializing WatsonX client with endpoint:', watsonxConfig.endpoint);
     const watsonxAIService = WatsonXAI.newInstance({
       authenticator: new IamAuthenticator({
-        apikey: watsonxConfig.apiKey,
+        apikey: watsonxConfig.apiKey
       }),
       serviceUrl: watsonxConfig.endpoint,
       version: watsonxConfig.version
@@ -53,7 +54,13 @@ export const handler = async function(event, context) {
       console.error('WatsonX authentication failed:', {
         message: authError.message,
         stack: authError.stack,
-        response: authError.response?.data
+        response: authError.response?.data,
+        config: {
+          endpoint: watsonxConfig.endpoint,
+          version: watsonxConfig.version,
+          hasApiKey: !!watsonxConfig.apiKey,
+          hasProjectId: !!watsonxConfig.projectId
+        }
       });
       return {
         statusCode: 500,
