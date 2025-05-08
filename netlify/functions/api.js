@@ -113,13 +113,7 @@ export const handler = async function(event, context) {
           };
         }
 
-        if (framework !== 'react') {
-          return {
-            statusCode: 400,
-            body: JSON.stringify({ error: 'Only React framework is supported for code generation' })
-          };
-        }
-
+        // Always use React for generation
         const frameworkSpecificRequirements = `
 Requirements:
 1. Always include necessary imports from '@carbon/react'
