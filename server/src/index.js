@@ -95,6 +95,12 @@ app.use(limiter);
 
 // Generate code from prompt
 app.post('/api/generate', async (req, res) => {
+  console.log('🔵 [Local Server] /api/generate endpoint hit');
+  console.log('🔵 [Local Server] Request body:', {
+    hasPrompt: !!req.body.prompt,
+    model: req.body.model,
+    framework: req.body.framework
+  });
   try {
     const { prompt, model, framework = 'react' } = req.body;
     
@@ -200,6 +206,11 @@ Please provide ONLY the ${framework === 'react' ? 'React' : 'Web Components'} co
 
 // Refine code through chat
 app.post('/api/refine', async (req, res) => {
+  console.log('🔵 [Local Server] /api/refine endpoint hit');
+  console.log('🔵 [Local Server] Request body:', {
+    hasPrompt: !!req.body.prompt,
+    hasPreviousCode: !!req.body.previousCode
+  });
   try {
     const { prompt, previousCode } = req.body;
     
@@ -257,6 +268,12 @@ Please provide the complete updated React component code with all necessary chan
 
 // Convert code from other design systems to Carbon
 app.post('/api/convert', async (req, res) => {
+  console.log('🔵 [Local Server] /api/convert endpoint hit');
+  console.log('🔵 [Local Server] Request body:', {
+    hasSourceCode: !!req.body.sourceCode,
+    sourceDesignSystem: req.body.sourceDesignSystem,
+    targetFramework: req.body.targetFramework
+  });
   try {
     const { sourceCode, sourceDesignSystem, targetFramework, model } = req.body;
     
@@ -285,7 +302,14 @@ Requirements:
 5. Include all necessary imports from '@carbon/react'
 6. Preserve component structure and props
 7. Add proper accessibility attributes
-8. Follow Carbon Design System naming conventions` : `
+8. Follow Carbon Design System naming conventions
+9. Always return a complete React component with:
+   - Proper imports
+   - Component declaration with export
+   - Required state management
+   - Complete JSX structure
+   - Proper TypeScript types if applicable
+10. The component should be immediately usable in a code sandbox` : `
 Requirements:
 1. Convert all UI components to their Carbon Web Components equivalents
 2. Use proper custom element naming (kebab-case)
@@ -310,7 +334,15 @@ ${frameworkSpecificRequirements}
 Source code in ${sourceDesignSystem}:
 ${sourceCode}
 
-Please provide the complete converted code using Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}. Only return code, do not return any other text.`,
+Please provide a complete, working ${targetFramework === 'react' ? 'React' : 'Web Components'} component that can be immediately used in a code sandbox. The response should include:
+1. All necessary imports
+2. A complete component with proper exports
+3. Required state management
+4. All necessary props and types
+5. Proper event handlers
+6. Complete JSX structure
+
+Return ONLY the complete component code, no additional text or explanations.`,
       modelId: model || watsonxConfig.modelId,
       projectId: watsonxConfig.projectId,
       parameters: {
@@ -365,9 +397,12 @@ Please provide the complete converted code using Carbon Design System ${targetFr
 
 // Health check endpoint
 app.get('/health', (req, res) => {
+  console.log('🔵 [Local Server] /health endpoint hit');
   res.json({ status: 'ok' });
 });
 
 app.listen(port, () => {
+  console.log('🔵 [Local Server] Server started on port:', port);
+  console.log('🔵 [Local Server] Environment:', process.env.NODE_ENV);
   logger.info(`Server running on port ${port}`);
 });

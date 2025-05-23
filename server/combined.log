@@ -1,96 +1,21 @@
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.generateText is not a function","stack":"TypeError: watsonxAIService.generateText is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:61:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: this.authenticator.authenticate is not a function","stack":"TypeError: this.authenticator.authenticate is not a function\n    at BaseService.createRequest (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/ibm-cloud-sdk-core/lib/base-service.js:226:35)\n    at WatsonxAiMlVmlv1.textGeneration (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/@ibm-cloud/watsonx-ai/dist/watsonx-ai-ml/vml-v1.js:2400:21)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:61:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.chat is not a function","stack":"TypeError: watsonxAIService.chat is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:62:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.textChat is not a function","stack":"TypeError: watsonxAIService.textChat is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:62:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.textChat is not a function","stack":"TypeError: watsonxAIService.textChat is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:62:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.textChat is not a function","stack":"TypeError: watsonxAIService.textChat is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:62:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"error","message":"Error in /api/generate: watsonxAIService.generateText is not a function","stack":"TypeError: watsonxAIService.generateText is not a function\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:62:45\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:149:13)\n    at Route.dispatch (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/route.js:119:3)\n    at Layer.handle [as handle_request] (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/layer.js:95:5)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:284:15\n    at Function.process_params (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:346:12)\n    at next (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express/lib/router/index.js:280:10)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/express-rate-limit/dist/index.cjs:822:7\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Generating code for prompt:","prompt":"Create a Carbon Design System component for: A datatable with expandable rows and filtering."}
-{"level":"error","message":"Error in /api/generate: Bad Gateway","stack":"Bad Gateway: Bad Gateway\n    at RequestWrapper.formatError (/Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/@ibm-cloud/watsonx-ai/node_modules/ibm-cloud-sdk-core/lib/request-wrapper.js:373:21)\n    at /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/node_modules/@ibm-cloud/watsonx-ai/node_modules/ibm-cloud-sdk-core/lib/request-wrapper.js:359:45\n    at process.processTicksAndRejections (node:internal/process/task_queues:105:5)\n    at async /Users/ajcase/Documents/GitHub/Carbon-Prototyper/carbon-prototyper/server/src/index.js:76:22"}
+{"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Generating code for prompt:","prompt":"Create a Carbon Design System component for: Create a data table with expandable rows, search, and a page header that says \"This is my table\"."}
-{"inputLength":861,"level":"info","message":"Watsonx request payload:","modelId":"ibm/granite-13b-instruct-v2","projectId":"05ef78ad-10f3-4249-b0e7-328763a42eab"}
-{"hasResults":true,"level":"info","message":"Watsonx response:","resultCount":1}
-{"level":"info","message":"Generated code length:"}
-{"level":"info","message":"Initializing WatsonXAI client"}
-{"hasAuthenticator":true,"level":"info","message":"WatsonXAI service initialized:","version":"2024-05-31"}
-{"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"meta-llama/llama-3-3-70b-instruct","projectId":"Set","version":"2024-05-31"}
 {"level":"info","message":"Server running on port 3001"}
 {"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Generating code for prompt:","prompt":"Create a Carbon Design System component for: A dashboard with a bar chart showing fake data on the population of china over the last 3 years, and datatable with filters and export capabilities. "}
-{"inputLength":913,"level":"info","message":"Watsonx request payload:","modelId":"ibm/granite-13b-instruct-v2","projectId":"05ef78ad-10f3-4249-b0e7-328763a42eab"}
-{"hasResults":true,"level":"info","message":"Watsonx response:","resultCount":1}
-{"level":"info","message":"Generated code length:"}
-{"level":"info","message":"Generating code for prompt:","prompt":"Create a Carbon Design System component for: A dashboard with a bar chart showing fake data on the population of china over the last 3 years, and datatable with filters and export capabilities. "}
-{"inputLength":913,"level":"info","message":"Watsonx request payload:","modelId":"ibm/granite-13b-instruct-v2","projectId":"05ef78ad-10f3-4249-b0e7-328763a42eab"}
-{"hasResults":true,"level":"info","message":"Watsonx response:","resultCount":1}
-{"level":"info","message":"Generated code length:"}
-{"level":"info","message":"Initializing WatsonXAI client"}
-{"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"meta-llama/llama-3-3-70b-instruct","projectId":"Set","version":"2024-05-31"}
 {"level":"info","message":"Server running on port 3001"}
 {"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"meta-llama/llama-3-3-70b-instruct","projectId":"Set","version":"2024-05-31"}
 {"level":"info","message":"Server running on port 3001"}
 {"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
-{"level":"info","message":"Server running on port 3001"}
-{"codeLength":1103,"designSystem":"material-ui","framework":"react","level":"info","message":"Converting code:"}
-{"convertedLength":1066,"level":"info","message":"Code conversion successful:","originalLength":1103}
-{"level":"info","message":"Initializing WatsonXAI client"}
-{"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"meta-llama/llama-3-3-70b-instruct","projectId":"Set","version":"2024-05-31"}
 {"level":"info","message":"Server running on port 3001"}
 {"level":"info","message":"Initializing WatsonXAI client"}
 {"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
-{"level":"info","message":"Server running on port 3001"}
-{"level":"info","message":"Initializing WatsonXAI client"}
-{"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
-{"level":"info","message":"Server running on port 3001"}
-{"codeLength":1103,"designSystem":"material-ui","framework":"react","level":"info","message":"Converting code:"}
-{"convertedLength":1076,"level":"info","message":"Code conversion successful:","originalLength":1103}
-{"level":"info","message":"Initializing WatsonXAI client"}
-{"level":"info","message":"Watsonx authentication successful"}
-{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"ibm/granite-13b-instruct-v2","projectId":"Set","version":"2024-05-31"}
+{"apiKey":"Set","endpoint":"https://us-south.ml.cloud.ibm.com","level":"info","message":"Watsonx Config:","modelId":"meta-llama/llama-3-3-70b-instruct","projectId":"Set","version":"2024-05-31"}
 {"level":"info","message":"Server running on port 3001"}

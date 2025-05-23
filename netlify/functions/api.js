@@ -1,6 +1,13 @@
 export const handler = async function(event, context) {
+  console.log('🟢 [Netlify Function] Request received:', {
+    method: event.httpMethod,
+    path: event.path,
+    queryStringParameters: event.queryStringParameters
+  });
+
   // Only allow POST requests
   if (event.httpMethod !== 'POST') {
+    console.log('🟢 [Netlify Function] Method not allowed:', event.httpMethod);
     return {
       statusCode: 405,
       body: JSON.stringify({ error: 'Method Not Allowed' })
@@ -8,6 +15,7 @@ export const handler = async function(event, context) {
   }
 
   try {
+    console.log('🟢 [Netlify Function] Initializing WatsonX...');
     const { WatsonXAI } = await import('@ibm-cloud/watsonx-ai');
     const { IamAuthenticator } = await import('ibm-cloud-sdk-core');
     const { getConfig } = await import('./config/watsonx.js');
@@ -17,7 +25,7 @@ export const handler = async function(event, context) {
     const watsonxConfig = getConfig();
     
     // Log configuration (excluding sensitive data)
-    console.log('WatsonX Configuration:', {
+    console.log('🟢 [Netlify Function] WatsonX Configuration:', {
       endpoint: watsonxConfig.endpoint,
       version: watsonxConfig.version,
       modelId: watsonxConfig.modelId,
@@ -76,7 +84,7 @@ export const handler = async function(event, context) {
     const body = JSON.parse(event.body);
     const { prompt, model, framework, previousCode, sourceCode, sourceDesignSystem, targetFramework } = body;
 
-    console.log('Request details:', {
+    console.log('🟢 [Netlify Function] Request details:', {
       framework,
       model,
       hasPrompt: !!prompt,
@@ -174,6 +182,7 @@ Please provide ONLY the React code with all necessary imports and proper structu
           .replace(/<html>\n?/g, '')
           .replace(/<\/html>\n?/g, '')
           .replace(/<\|end_of_text\|\>/g, '')
+          .replace(/^[^i]*?(?=import)/s, '')
           .trim();
 
         return {
@@ -239,6 +248,7 @@ Please provide the complete updated React component code with all necessary chan
           .replace(/<html>\n?/g, '')
           .replace(/<\/html>\n?/g, '')
           .replace(/<\|end_of_text\|\>/g, '')
+          .replace(/^[^i]*?(?=import)/s, '')
           .trim();
 
         return {
@@ -275,10 +285,22 @@ Requirements:
 2. If a component is not in the mapping, do not make up a component - use the closest equivalent
 3. Maintain the same functionality and behavior
 4. Use proper Carbon Design System patterns and best practices
-5. Include all necessary imports from '@carbon/react'
-6. Preserve component structure and props
-7. Add proper accessibility attributes
-8. Follow Carbon Design System naming conventions` : `
+5. DO NOT include base imports like 'react' or '@carbon/styles/css/styles.css' as they are already provided
+6. Only include imports for specific Carbon components being used
+7. Preserve component structure and props
+8. Add proper accessibility attributes
+9. Follow Carbon Design System naming conventions
+10. Always return a complete React component with:
+    - Only necessary Carbon component imports
+    - Component declaration with export
+    - Required state management using useState/useEffect
+    - Complete JSX structure
+    - Proper TypeScript types
+    - Proper event handlers
+    - Proper prop types and default props
+11. The component should be immediately usable in a code sandbox
+12. Include proper error handling and loading states if applicable
+13. Follow React best practices for component structure` : `
 Requirements:
 1. Convert all UI components to their Carbon Web Components equivalents
 2. Use proper custom element naming (kebab-case)
@@ -289,7 +311,15 @@ Requirements:
 7. Use proper Carbon Design System patterns and best practices
 8. Include all necessary imports from '@carbon/web-components'
 9. Add proper accessibility attributes
-10. Follow Carbon Design System naming conventions`;
+10. Follow Carbon Design System naming conventions
+11. Always return a complete Web Component with:
+    - Proper imports
+    - Custom element class definition
+    - Proper attribute and property definitions
+    - Complete shadow DOM structure
+    - Proper event handling
+    - Proper lifecycle methods
+12. The component should be immediately usable in a code sandbox`;
 
         const response = await watsonxAIService.generateText({
           input: `You are a ${targetFramework === 'react' ? 'React' : 'Web Components'} developer specializing in IBM Carbon Design System. Your task is to convert code from ${sourceDesignSystem} to Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}.
@@ -303,23 +333,45 @@ ${frameworkSpecificRequirements}
 Source code in ${sourceDesignSystem}:
 ${sourceCode}
 
-Please provide the complete converted code using Carbon Design System ${targetFramework === 'react' ? 'React' : 'Web Components'}. Only return code, do not return any other text.`,
+Please provide a complete, working ${targetFramework === 'react' ? 'React' : 'Web Components'} component that can be immediately used in a code sandbox. The response should include:
+1. ONLY imports for specific Carbon components being used (do not include base React or Carbon styles imports)
+2. A complete component with proper exports
+3. Required state management
+4. All necessary props and types
+5. Proper event handlers
+6. Complete JSX structure
+7. Proper error handling if applicable
+8. Loading states if applicable
+
+Return ONLY the complete component code, no additional text or explanations. The code should be immediately usable in a code sandbox.`,
           modelId: model || watsonxConfig.modelId,
           projectId: watsonxConfig.projectId,
           parameters: {
             max_new_tokens: watsonxConfig.maxTokens,
-            temperature: watsonxConfig.temperature,
-            top_p: watsonxConfig.topP,
-            frequency_penalty: watsonxConfig.frequencyPenalty,
-            presence_penalty: watsonxConfig.presencePenalty
+            temperature: 0.7, // Slightly lower temperature for more consistent output
+            top_p: 0.9,
+            frequency_penalty: 0.1, // Slight penalty to avoid repetition
+            presence_penalty: 0.1 // Slight penalty to encourage diverse output
           }
         });
 
-        console.log('Convert response:', {
+        console.log('🟢 [Netlify Function] Convert response:', {
           hasResults: !!response.result?.results,
           resultCount: response.result?.results?.length,
-          hasGeneratedText: !!response.result?.results?.[0]?.generated_text
+          hasGeneratedText: !!response.result?.results?.[0]?.generated_text,
+          generatedTextLength: response.result?.results?.[0]?.generated_text?.length
         });
+
+        if (!response.result?.results?.[0]?.generated_text) {
+          console.error('🟢 [Netlify Function] No generated text in response');
+          return {
+            statusCode: 500,
+            body: JSON.stringify({ 
+              error: 'No code generated', 
+              details: 'The API returned an empty response' 
+            })
+          };
+        }
 
         const convertedCode = response.result.results[0].generated_text
           .replace(/```(jsx|tsx|javascript|typescript|html)?\n?/g, '')
@@ -327,7 +379,10 @@ Please provide the complete converted code using Carbon Design System ${targetFr
           .replace(/<html>\n?/g, '')
           .replace(/<\/html>\n?/g, '')
           .replace(/<\|end_of_text\|\>/g, '')
+          .replace(/^[^i]*?(?=import)/s, '')
           .trim();
+
+        console.log('🟢 [Netlify Function] Converted code length:', convertedCode.length);
 
         return {
           statusCode: 200,
